@@ -1,29 +1,31 @@
 # My UNA Styled Posts: release readiness, October 26, 2026
 
-Status: RC1 preparation; final publication blocked by remaining native validation.
-Internal identity `nw_styled_posts`, version `0.1.0`, path `modules/newton/my_una_styled_posts/`.
-Target UNA 15 RC2 / PHP 8.3. Official native reference commit `05466c74ce6bbe4d8579fa901c6dc787d1dcff75`.
+Status: **RC4 preparation**. Final certification is blocked by remaining native validation.
+Identity: nw_styled_posts, version 0.1.0, modules/newton/my_una_styled_posts/.
+Observed current native runtime: UNA 15.0.0-RC3 / PHP 8.3.6 / MariaDB 10.11.14. Original reference/target: UNA 15 RC2; pinned source 05466c74ce6bbe4d8579fa901c6dc787d1dcff75. Broader 15.0.x compatibility remains a metadata declaration, not a claim of exhaustive testing.
 
 | Gate | Evidence | Status | Next action |
 |---|---|---|---|
-| Module source and core separation | Only module-owned runtime files; native registrations in module SQL | PASS | Preserve boundary |
-| Local behavior/contracts | 132 PHP assertions; 10 Python tests; syntax checks; Chromium editor/picker/theme suites | PASS | Freeze source checkpoint |
-| ZIP permissions | Regression test checks files 0644, parent directories 0755 | PASS | Verify every final ZIP member |
-| Live editor/photo picker | myunaworld.com dark-theme editor restored; nine Photos thumbnails loaded | PASS | Preserve native styling |
-| Live private photo copy and edit | Created post 3 as Only me; native photo 5 copied; image loaded; edit retained image and privacy | PASS | Extend to member role |
-| Guest denial | Guest post HTTP 403 and background/3 HTTP 404 | PASS | Extend to other member/guest cases |
-| Clean Studio installation/info/launcher | Initial user installation predates final repairs; no clean install of frozen RC1 | NOT TESTED | Install on disposable UNA site |
-| Native database compatibility | Installed schema exists; no controlled fresh strict MariaDB/MySQL run recorded | NOT TESTED | Execute native install on target database |
-| Member actions and lifecycle | Full create/edit/delete/comments/reactions/reposts and disable/re-enable/uninstall not validated | NOT TESTED | Complete authenticated cycle on disposable test site |
-| Native updater | First release; development file patches are not native updaters | NOT APPLICABLE | Do not label file patch as Studio updater |
-| Marketplace material | Draft description, guide, changelog and demo preview included | PASS (draft) | Confirm listing fields/media requirements and production status |
-| GitHub and analysis | No remote configured; proposed newton27/my-una-styled-posts returned 404; no SonarCloud project | BLOCKED | Create/connect repository, publish source and configure analysis |
-| Final release/marketplace publication | No tag, GitHub release, marketplace upload or listing published | BLOCKED | Close remaining gates before final publication |
+| Source/core boundary | Module-owned runtime changes only; no core or theme edits | PASS | Preserve boundary |
+| Local suite | 11 Python tests, 150 PHP assertions and PHP/JS syntax checks | PASS | Retain source checkpoint |
+| Installer permissions | Explicit files 0644/directories 0755 and archive regression | PASS | Verify finished RC4 archive |
+| Composer/native Photos | myunaworld.com editor and nine Photos thumbnails; independent private photo copy/edit passed | PASS | Extend member-role/upload cases |
+| Guest denial | myunaworld.com private post/background denied; gayjaxonline.com private entry HTTP 403 | PASS | Extend non-owner cases |
+| Native installation | gayjaxonline.com fresh Studio install/info/settings and rendered launcher icon passed for RC2 predecessor | PASS | Repeat with current adapter registrations |
+| Strict database | Native strict MariaDB install passed after 52 required-field corrections | PASS | Separate strict MySQL still untested |
+| Comments/reactions | Native admin browser count 1→2, Love/Haha/undo and matching database results | PASS | Extend Standard-member permissions |
+| Disable/re-enable | Entry and customized settings preserved in native Studio | PASS | Retain evidence |
+| Member/non-owner, upload lifecycle, repost/Timeline, logs | Remaining controlled native checks not complete | NOT TESTED | Complete remaining cycles |
+| Uninstall/reinstall | Paused after new public entry/photo appeared; private backups verified | BLOCKED | Confirm scope and refresh backup before deletion |
+| Native updater | First release; file repairs are not native updaters | NOT APPLICABLE | Do not represent full installer as updater |
+| Marketplace text | Description, guide and changelog prepared | PASS | Select price/category and accepted media |
+| Marketplace submission | Signed-in Add opens blank New Product dialog; no fields/save control | BLOCKED | Resolve form and choose price |
+| GitHub source | Current main contains exact local source tree and later interaction fixes | PASS | Verify subsequent commits before packaging |
+| Existing GitHub release | Vendor-created My_UNA_Styled_Post tag at e05cf2c; no installer assets | BLOCKED | Reconcile with final validated candidate; explicit approval required for release changes |
+| Final certification | Remaining gates open; no Marketplace listing created | BLOCKED | Complete tests before final certification |
 
-Private QA post retained at `https://myunaworld.com/view-styled-post/styled-posts-release-check-private-photo` (post 3, Only me). It contains an explicitly labeled test statement; no public test post was made. No source photos were deleted or modified. Existing homepage draft was left untouched.
+See native-lifecycle-2026-10-26.md for detailed observations, backups and pending work. Admin action passes do not establish Standard-member permissions. Source revisions and immutable older ZIPs describe their own checkpoints; never replace their bytes silently.
 
-Known limits: native Photos only (no Albums/avatar picker); full-source thumbnail downloads; header/MIME/size/dimension image validation rather than a full decoder; no dedicated global search provider. The candidate changes the unfinished action-block heading to Actions; installed language database still requires native language update before the changed label appears there.
+Known limits: native Photos only, no Albums/avatar picker; source-image thumbnail downloads; image header/MIME/size/dimension checks rather than a full decoder; no dedicated global search provider; English interface; Local background storage.
 
-Packaging: native installer rooted at `newton/my_una_styled_posts/`; extract into `modules/` and use Studio. Development kit includes the native installer, source, tests, draft marketplace copy, demo preview, licenses and manifest. No live account photos/screenshots are included. Old ZIPs remain immutable, including the earlier faulty permission patch; do not redistribute those old patches.
-
-RC1 denotes preparation status; native manifest remains 0.1.0. No claim of a tested native 0.1.0-to-0.1.0 updater. Build manifest records the frozen source commit separately from future release-record edits.
+Installer root: newton/my_una_styled_posts/, to extract into modules/. Development kits include source, tests, preview, licenses, draft Marketplace text and a manifest. No member photos, private browser screenshots or site credentials are included. Old faulty permission patches must not be redistributed. The full installer is not a native updater for an existing development installation.

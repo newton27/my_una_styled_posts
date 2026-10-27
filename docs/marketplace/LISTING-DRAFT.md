@@ -1,23 +1,48 @@
-# My UNA Styled Posts — listing draft
+# My UNA Styled Posts
 
-Status: RC1 preparation, not yet approved for final distribution.
-Vendor: My UNA World. Native module version: 0.1.0.
-Target: UNA 15 RC2 / PHP 8.3; broader UNA 15 compatibility requires validation.
+**Turn a few words into a colorful, expressive post.**
 
-Give short thoughts a visual style. Members create editable quote cards with expressive fonts, colors and backgrounds, while using UNA's native audience controls.
+My UNA Styled Posts lets members create editable quote cards and short statements with fonts, colors, patterns, and photo backgrounds. A live preview shows their design before posting.
 
-Features:
-- Five fonts, including locally bundled Caveat and Playfair Display.
-- Font size, text color, alignment and custom solid background color.
-- Ten color, gradient, pattern and illustrated background presets.
-- Upload JPG, PNG or WebP backgrounds, or choose an existing photo from the current profile's native UNA Photos library.
-- Live preview and up to 500 Unicode characters, with responsive text fitting.
-- Private, independent background copies governed by the styled post audience.
-- Native UNA comments, reactions and Timeline integration (remaining authenticated release tests required).
-- Studio controls for available fonts/backgrounds/uploads and UNA membership permissions.
+## Features
 
-No UNA core files are modified. The Posts module is not required. Photos is optional for the existing-photo picker; uploads and presets work independently. Timeline is needed for feed distribution. Background copies use the installed Local storage engine.
+- Five font styles, including handwritten and editorial fonts.
+- Adjustable font size, text color, and alignment.
+- Ten backgrounds featuring colors, gradients, patterns, and illustrations.
+- Custom solid background colors.
+- **Upload photo** and **Choose from my photos** options.
+- Up to 500 characters, with text fitting for smaller screens.
+- Native UNA audience controls.
+- Editable text and styling after posting.
+- Integration with UNA comments, reactions, and Timeline.
 
-Limits: 8 MiB, 16 megapixels, 8000 pixels per dimension. Albums/avatar photos are not included. The picker currently downloads original images for thumbnails. Dedicated global search discovery is not included. English interface; bundled font licenses accompany the module.
+## Webmaster controls
 
-Listing category, price, marketplace-specific media dimensions and final compatibility range remain to be confirmed. Preview screenshots are demonstration material; they do not contain member photos.
+Choose which fonts and backgrounds members can use, enable or disable photo uploads, configure automatic approval, and manage posting permissions through UNA Memberships.
+
+## Photo backgrounds
+
+Uploaded backgrounds support JPG, PNG, and WebP files up to 8 MiB. Selecting an existing photo creates an independent background copy, shared with the Styled Post’s chosen audience.
+
+## Requirements
+
+UNA 15 and PHP 8.3. Native Photos is optional and enables the existing-photo picker; Albums and avatars are not included. Timeline is required for feed distribution. This candidate uses Local storage for background copies.
+
+This standalone module does not require Posts and does not modify UNA core files. Bundled fonts are served locally.
+
+**By My UNA World · Version 0.1.0**
+
+**Release status:** Release candidate. Remaining member-role, upload lifecycle, repost and uninstall/reinstall validation is pending.
+
+---
+
+Internal publishing notes — omit this section from the public description:
+
+- Price and Marketplace category have not been selected by the vendor.
+- The My UNA World account’s Manage Products view has no existing Styled Posts listing.
+- The Marketplace Add control opens a blank New Product dialog; no form fields or save control render. No listing was submitted or saved.
+- Actual live tests include UNA 15.0.0-RC3 / PHP 8.3.6 / MariaDB 10.11.14. Earlier target/reference was UNA 15 RC2; metadata declares 15.0.x. Broader platform coverage is not certified.
+- The existing-photo picker supports native Photos, not Albums or avatars. Current thumbnails download source images. Dedicated global search discovery is not included.
+- Image limits are 8 MiB, 16 megapixels, and 8000 pixels per dimension.
+- Use the current candidate installer, not GitHub’s automatic Source code ZIP. No native updater is provided for development installations.
+- The vendor-created My_UNA_Styled_Post release points to e05cf2c and contains no installer assets. Its tag/release has not been modified by this test run.

@@ -1,6 +1,6 @@
 # My UNA Styled Posts
 
-Development candidate **0.1.0**, targeting UNA 15 RC2 / PHP 8.3. The composer/photo picker have been exercised on myunaworld.com; clean native installation and disable/re-enable preservation have passed on gayjaxonline.com. Comment rendering/live counts, remaining member/guest interactions and uninstall/reinstall validation are still open. This package does not change UNA core files.
+Development candidate **0.1.0**, targeting UNA 15 RC2 / PHP 8.3. The composer/photo picker have been exercised on myunaworld.com; clean native installation and disable/re-enable preservation have passed on gayjaxonline.com. Authenticated admin comment/live-count and reaction add/change/remove cycles have also passed. Standard-member/non-owner, upload lifecycle, repost and uninstall/reinstall validation remain open. This package does not change UNA core files.
 
 Members can create editable text cards with five font styles, text size/color/alignment, ten preset backgrounds, a custom solid color an uploaded photo, or a photo selected from the current profile’s native UNA Photos library. A live preview adapts the card to the available width. Posts use native UNA privacy, comments, reactions and repost services.
 
@@ -48,4 +48,4 @@ Original module code and decorative vector artwork are MIT licensed. Selected na
 
 ## Release preparation
 
-See `docs/evidence/native-lifecycle-2026-10-26.md` for the latest native results and open findings, and `docs/evidence/release-readiness-2026-10-26.md` for the earlier gate review. RC3 includes the corrected native author-count language placeholder; it is a test candidate, not a final marketplace release. Older evidence files and immutable ZIPs describe their original checkpoints.
+See `docs/evidence/native-lifecycle-2026-10-26.md` for the latest native results and open findings, and `docs/evidence/release-readiness-2026-10-26.md` for the earlier gate review. RC4 includes the corrected author-count language placeholder, native comment layout compatibility, live comment/reaction counts and a native reaction picker. It is a test candidate, not a final Marketplace release. Older evidence files and immutable ZIPs describe their original checkpoints.

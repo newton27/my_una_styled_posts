@@ -80,3 +80,22 @@ Anonymous HTTP request to the private QA entry returned **403 Access denied** an
 Two entries now exist: private QA entry 1 and a new public entry 2 not created by this test run. Uninstall/reinstall is paused to preserve the latter. A private module-data snapshot was created before any potential destructive lifecycle work. No uninstall occurred. No account credentials were reset, no original site content was deleted, and no final release was published.
 
 Local regression suite after these corrections: **11 Python tests and 150 PHP assertions**, plus PHP and JavaScript syntax checks, passed. Remaining gates include real browser comment/count/reaction cycles, photo upload/replacement/removal, Standard-member/non-owner checks, repost/Timeline checks, health logs and the approved uninstall/reinstall cycle.
+
+## Resumed authenticated browser cycle
+
+Authenticated admin session on gayjaxonline.com; current native UI rendered the corrected header and live counter. These are admin-profile results, not a substitute for Standard-member or non-owner coverage.
+
+- Initial private entry 1 had one comment and one Like. Removed that Like through the native action; no navigation occurred.
+- Opened the native picker: Like, Love, Haha, Wow, Sad and Angry were available.
+- Selected Love. The icon changed to Love and the visible reaction count became 1 without reloading.
+- Posted “Private release QA — live comment count check.” through the native editor. The heading changed from 1 to 2 immediately, without reloading; no raw header placeholders appeared.
+- Removed Love, opened the picker, and selected Haha. The icon became Haha and count 1 without reloading. The URL remained the private QA entry.
+- Native database verification passed: entry comments=2, rvotes=1, exactly one entry-1 reaction-track row with reaction=joy and author_id=3, and comment IDs 1 and 2.
+- Removed Haha. The button returned to the unvoted state and its empty counter hid. Native verification passed: entry rvotes=0 and no reaction-track row for entry 1.
+- Evidence files are private on the server: browser-joy-comment-check.json and browser-reaction-removed.json under the existing QA directory. Commands ran as gayjaxonline through runuser after the newly connected Webmin terminal was found to be root.
+
+Marketplace work: opened the signed-in My UNA World account’s Manage Products page. Eight existing products were shown, with no Styled Posts listing. Add opened a blank New Product dialog: header/Close rendered, but no form fields or save control. No listing was created. Price remains unspecified. The listing text is prepared in docs/marketplace/LISTING-DRAFT.md.
+
+A vendor-created GitHub release now exists: My_UNA_Styled_Post, tagged at e05cf2c180c20faba3ee55b50bf35fdf6fe5d463, body “My UNA Styled Post 0.1.0”, no installer assets. It is marked as an ordinary release by the vendor; that does not certify the still-open test gates. The tag/release was inspected read-only and was not moved, edited or replaced. Current main contains later interaction fixes.
+
+Remaining: Standard-member/non-owner coverage, controlled photo upload/replacement/removal, repost/Timeline checks, relevant health-log review and the explicitly approved uninstall/reinstall cycle. Existing public entry 2 and its photo remain untouched. The earlier backup predates this resumed private comment/reaction cycle and must be refreshed before any destructive lifecycle test.
