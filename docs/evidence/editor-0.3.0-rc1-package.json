@@ -1,0 +1,24 @@
+{
+  "source_commit": "80f36e1bbb4b176d3590b4bc4a5c444d74a94ce8",
+  "remote_commit": "d0fc89bf5bbb2c7c2946bcd3cd7aa9343ff7cad2",
+  "source_tree": "c01fe2921e6f15db0b8b1fc43fc7afc5d7eef46a",
+  "status": "RC1; native site deployment blocked; not a released update",
+  "module_files": 49,
+  "assets": [
+    {
+      "name": "my-una-styled-posts-0.3.0-editor-rc1-install.zip",
+      "bytes": 788074,
+      "sha256": "2e241d1c13e448ccdc6447bb6c0fa897a014b05f4fe0ec5a4ee0acb1c3af5e8f"
+    },
+    {
+      "name": "my-una-styled-posts-0.3.0-editor-rc1-update-0.2.0-to-0.3.0.zip",
+      "bytes": 790919,
+      "sha256": "4485963c78c729f6cfd27a441e804e6c679a819eeab4169e6c1779dc3b6ece12"
+    },
+    {
+      "name": "my-una-styled-posts-0.3.0-editor-rc1-kit.zip",
+      "bytes": 2959198,
+      "sha256": "d4ebbf8ca3fe3fc1aa68c79617f2ed822b46708d21819554cebe61357224810d"
+    }
+  ]
+}
