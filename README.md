@@ -2,9 +2,9 @@
 
 # My UNA Styled Posts
 
-Development candidate **0.1.0**, targeting UNA 15 RC2 / PHP 8.3. The composer/photo picker have been exercised on myunaworld.com; clean native installation and disable/re-enable preservation have passed on gayjaxonline.com. Authenticated admin comment/live-count and reaction add/change/remove cycles have also passed. Standard-member/non-owner, upload lifecycle, repost and uninstall/reinstall validation remain open. This package does not change UNA core files.
+Development candidate **0.2.0**, targeting UNA 15 / PHP 8.3. The native 0.1.0→0.2.0 update has been exercised on gayjaxonline.com with a corrected language step; see the motion update evidence. The composer/photo picker have been exercised on myunaworld.com; clean native installation and disable/re-enable preservation have passed on gayjaxonline.com. Authenticated admin comment/live-count and reaction add/change/remove cycles have also passed. Standard-member/non-owner, upload lifecycle, repost and uninstall/reinstall validation remain open. This package does not change UNA core files.
 
-Members can create editable text cards with five font styles, text size/color/alignment, ten preset backgrounds, a custom solid color an uploaded photo, or a photo selected from the current profile’s native UNA Photos library. A live preview adapts the card to the available width. Posts use native UNA privacy, comments, reactions and repost services.
+Members can create editable text cards with five font styles, text size/color/alignment, ten still backgrounds, two original four-second motion loops, a custom solid color, an uploaded photo, or a photo selected from the current profile’s native UNA Photos library. A live preview adapts the card to the available width. Posts use native UNA privacy, comments, reactions and repost services.
 
 ## Preview
 

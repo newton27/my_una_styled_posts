@@ -1,4 +1,4 @@
-import re, unittest
+import re, unittest, xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 MODULE=ROOT/'modules/newton/my_una_styled_posts'
@@ -27,3 +27,8 @@ class MotionUpdate(unittest.TestCase):
   self.assertIn('MIT',(MODULE/'template/motion/LICENSE.txt').read_text())
  def test_updater_packaging_includes_source(self):
   self.assertIn('update_0.1.0_0.2.0',(ROOT/'scripts/build.py').read_text())
+ def test_native_update_language_uses_add_and_update_tags(self):
+  resources=ET.parse(UPDATE/'langs/en.xml').getroot()
+  self.assertFalse(resources.findall('string'),'Native updater ignores installation-only string tags')
+  additions={s.attrib['name'] for s in resources.findall('string_add')}
+  self.assertTrue({'_nw_styled_posts_option_allow_motion_uploads','_nw_styled_posts_option_background_motion_tides','_nw_styled_posts_option_background_motion_glow'}<=additions)
