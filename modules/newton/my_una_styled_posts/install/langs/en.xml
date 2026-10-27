@@ -81,4 +81,16 @@
   <string name="_nw_styled_posts_option_allow_motion_uploads"><![CDATA[Allow 3–5 second video and GIF backgrounds (requires native video conversion and ffprobe)]]></string>
   <string name="_nw_styled_posts_option_background_motion_tides"><![CDATA[Background: Moving tides]]></string>
   <string name="_nw_styled_posts_option_background_motion_glow"><![CDATA[Background: Soft glow]]></string>
+  <string name="_nw_styled_posts_field_text_backdrop"><![CDATA[Text backdrop]]></string>
+  <string name="_nw_styled_posts_field_backdrop_color"><![CDATA[Backdrop color]]></string>
+  <string name="_nw_styled_posts_field_backdrop_opacity"><![CDATA[Backdrop opacity]]></string>
+  <string name="_nw_styled_posts_field_backdrop_padding"><![CDATA[Backdrop padding]]></string>
+  <string name="_nw_styled_posts_field_image_x"><![CDATA[Image x]]></string>
+  <string name="_nw_styled_posts_field_image_y"><![CDATA[Image y]]></string>
+  <string name="_nw_styled_posts_field_image_zoom"><![CDATA[Image zoom]]></string>
+  <string name="_nw_styled_posts_field_text_direction"><![CDATA[Text direction]]></string>
+  <string name="_nw_styled_posts_option_font_amiri"><![CDATA[Font: Amiri · عربي]]></string>
+  <string name="_nw_styled_posts_option_font_arabic_modern"><![CDATA[Font: Arabic Modern · عربي]]></string>
+  <string name="_nw_styled_posts_option_font_rounded"><![CDATA[Font: Friendly]]></string>
+  <string name="_nw_styled_posts_option_font_book"><![CDATA[Font: Book]]></string>
 </resources>

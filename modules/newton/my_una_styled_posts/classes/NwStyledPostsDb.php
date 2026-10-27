@@ -24,10 +24,12 @@ class NwStyledPostsDb extends BxBaseModTextDb
     {
         return $this->getAll("SELECT `id`,`title` FROM `nw_styled_posts_entries` WHERE `status_admin`='pending' ORDER BY `id` DESC LIMIT 100");
     }
-    public function recentEntries($profileId = 0): array
+    public function recentEntries($profileId = 0, int $before = 0, int $limit = 50): array
     {
         $where=$profileId>0?' AND `author`=:author':'';
         $bindings=$profileId>0?['author'=>(int)$profileId]:[];
-        return $this->getAll("SELECT * FROM `nw_styled_posts_entries` WHERE `status`='active' AND `status_admin`='active'".$where." ORDER BY `id` DESC LIMIT 60",$bindings);
+        if ($before>0) {$where.=' AND `id`<:before';$bindings['before']=$before;}
+        $limit=max(1,min(50,$limit));
+        return $this->getAll("SELECT * FROM `nw_styled_posts_entries` WHERE `status`='active' AND `status_admin`='active'".$where." ORDER BY `id` DESC LIMIT ".$limit,$bindings);
     }
 }

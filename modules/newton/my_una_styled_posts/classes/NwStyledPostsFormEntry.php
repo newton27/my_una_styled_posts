@@ -35,7 +35,7 @@ class NwStyledPostsFormEntry extends BxBaseModTextFormEntry
     protected function validatedValues(): array
     {
         $values=[];
-        foreach(['font_name','font_size','text_color','text_align','background','background_color'] as $field) $values[$field]=$this->getCleanValue($field);
+        foreach(NwStyledPostsStyle::FIELDS as $field) $values[$field]=array_key_exists($field,$_POST)?$_POST[$field]:$this->getCleanValue($field);
         $photo=$this->selectedPhotoId();
         if ($photo && !$this->_oModule->photoLibrary()->resolve($photo)) throw new InvalidArgumentException('That photo is no longer available. Choose another photo.');
         $values=NwStyledPostsStyle::normalize($values,NwStyledPostsStyle::catalog());
@@ -47,7 +47,7 @@ class NwStyledPostsFormEntry extends BxBaseModTextFormEntry
     protected function genCustomInputStyledControls($input)
     {
         $values=$this->_styledOriginal;
-        if ($this->isSubmitted()) foreach(['font_name','font_size','text_color','text_align','background','background_color','text'] as $field) $values[$field]=$this->getCleanValue($field);
+        if ($this->isSubmitted()) foreach(array_merge(NwStyledPostsStyle::FIELDS,['text']) as $field) $values[$field]=$this->getCleanValue($field);
         $template=$this->_oModule->_oTemplate;
         $selected=0;
         try { $selected=$this->selectedPhotoId(); } catch (InvalidArgumentException $e) {}

@@ -90,12 +90,27 @@ class NwStyledPostsModule extends BxBaseModTextModule
         $html='';
         $requested=bx_get('profile_id');
         $profileId=is_scalar($requested) && preg_match('/^\d+$/D',(string)$requested)?(int)$requested:0;
-        foreach($this->_oDb->recentEntries($profileId) as $post) {
+        $rawBefore=bx_get('before');$before=is_scalar($rawBefore) && preg_match('/^[0-9]{1,10}$/D',(string)$rawBefore)?(int)$rawBefore:0;
+        require_once __DIR__.'/NwStyledPostsGallery.php';
+        $page=NwStyledPostsGallery::page(fn($cursor,$limit)=>$this->_oDb->recentEntries($profileId,$cursor,$limit),fn($post)=>$this->checkAllowedView($post)===CHECK_ACTION_RESULT_ALLOWED,$before);
+        foreach($page['items'] as $post) {
             if ($this->checkAllowedView($post) !== CHECK_ACTION_RESULT_ALLOWED) continue;
             $url=BX_DOL_URL_ROOT.'page.php?i=view-styled-post&id='.(int)$post['id'];
             $html.='<a href="'.NwStyledPostsStyle::escape($url).'" aria-label="'.NwStyledPostsStyle::escape($post['title']).'">'.$this->_oTemplate->card($post).'</a>';
         }
-        return $html ? '<div class="nwsp-gallery">'.$html.'</div>' : MsgBox(_t('_Empty'));
+        $older=$page['next']?'<p><a class="bx-btn" href="'.NwStyledPostsStyle::escape(BX_DOL_URL_ROOT.'page.php?i=styled-posts-home&before='.$page['next'].($profileId?'&profile_id='.$profileId:'')).'">Older posts</a></p>':'';
+        return ($html?'<div class="nwsp-gallery">'.$html.'</div>':MsgBox(_t('_Empty'))).$older;
+    }
+
+    public function actionFont($id='')
+    {
+        if (!is_string($id) || !preg_match('/^[a-z][a-z0-9_]{0,23}$/D',$id)) {http_response_code(404);return;}
+        require_once __DIR__.'/NwStyledPostsFontPacks.php';
+        $packs=NwStyledPostsFontPacks::load(NwStyledPostsFontPacks::directory());
+        $font=$packs['fonts']['custom_'.$id]??null;
+        if (!$font) {http_response_code(404);return;}
+        header('Content-Type: font/woff2');header('X-Content-Type-Options: nosniff');header('Cache-Control: public, max-age=3600');
+        readfile($font['path']);
     }
 
     public function getBackgroundUrl(array $post): string

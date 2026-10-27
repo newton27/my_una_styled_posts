@@ -10,7 +10,7 @@ const { chromium } = require(require.resolve('playwright', { paths: [process.env
  await page.goto(pathToFileURL(path.resolve('preview/index.html')).href);
  await page.evaluate(()=>document.fonts.ready);
  assert.equal(await page.locator('[data-background]').count(),12);
- assert.equal(await page.locator('[data-control=font_name] option').count(),5);
+ assert.equal(await page.locator('[data-control=font_name] option').count(),9);
  await page.locator('[name=text]').fill('<script>alert(1)</script>\nHello 世界 👋');
  assert.equal(await page.locator('.nwsp-text').textContent(),'<script>alert(1)</script>\nHello 世界 👋');
  assert.equal(await page.locator('.nwsp-text script').count(),0);

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources name="en" flag="gb" title="English">
+  <string_add name="_nw_styled_posts_field_text_backdrop"><![CDATA[Text backdrop]]></string_add>
+  <string_add name="_nw_styled_posts_field_backdrop_color"><![CDATA[Backdrop color]]></string_add>
+  <string_add name="_nw_styled_posts_field_backdrop_opacity"><![CDATA[Backdrop opacity]]></string_add>
+  <string_add name="_nw_styled_posts_field_backdrop_padding"><![CDATA[Backdrop padding]]></string_add>
+  <string_add name="_nw_styled_posts_field_image_x"><![CDATA[Image x]]></string_add>
+  <string_add name="_nw_styled_posts_field_image_y"><![CDATA[Image y]]></string_add>
+  <string_add name="_nw_styled_posts_field_image_zoom"><![CDATA[Image zoom]]></string_add>
+  <string_add name="_nw_styled_posts_field_text_direction"><![CDATA[Text direction]]></string_add>
+  <string_add name="_nw_styled_posts_option_font_amiri"><![CDATA[Font: Amiri · عربي]]></string_add>
+  <string_add name="_nw_styled_posts_option_font_arabic_modern"><![CDATA[Font: Arabic Modern · عربي]]></string_add>
+  <string_add name="_nw_styled_posts_option_font_rounded"><![CDATA[Font: Friendly]]></string_add>
+  <string_add name="_nw_styled_posts_option_font_book"><![CDATA[Font: Book]]></string_add>
+</resources>

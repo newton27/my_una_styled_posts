@@ -5,3 +5,5 @@
 - Caveat variable font: Google Fonts / Caveat authors, SIL Open Font License 1.1. The original font and `Caveat-OFL.txt` are bundled unchanged.
 - Playfair Display variable font: Google Fonts / Playfair Display authors, SIL Open Font License 1.1. The original font and `PlayfairDisplay-OFL.txt` are bundled unchanged.
 - Quiet mountains and Botanical background illustrations are original SVG artwork included with this module under MIT.
+
+- Amiri Regular, The Amiri Project Authors, SIL Open Font License 1.1. Original Google Fonts blob `14dfa0d6c80db50460d23daa306a7ac92e74676f`, `ofl/amiri/Amiri-Regular.ttf`; bundled unchanged with `Amiri-OFL.txt`. Arabic Modern, Friendly and Book use system font stacks, not redistributed fonts.

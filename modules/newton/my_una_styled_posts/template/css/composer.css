@@ -32,3 +32,5 @@
 .nwsp-photo-dialog button:focus-visible{outline:3px solid #7255b6;outline-offset:3px}
 .nwsp-photo-actions+ .nwsp-help{margin-bottom:18px}
 @media(max-width:520px){.nwsp-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nwsp-photo-dialog{padding:14px}}
+
+.nwsp-readability,.nwsp-image-adjust{margin:16px 0}.nwsp-readability summary,.nwsp-image-adjust summary,.nwsp-motion-choices summary{cursor:pointer;padding:8px 0;font-weight:600}.nwsp-adjust-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0}.nwsp-adjust-grid label{display:grid;gap:6px;font-size:12px}.nwsp-adjust-grid input[type=range]{width:100%;accent-color:#7255b6}.nwsp-adjust-grid select{max-width:100%;padding:8px;border:1px solid #c9b8e3;border-radius:8px;background:#fff;color:#272938}.nwsp-adjust-grid input[type=color]{width:100%;min-height:36px}.nwsp-image-adjust button{border:1px solid #c9b8e3;border-radius:8px;background:#f0eaf9;color:#49316d;padding:10px 14px;font:inherit;cursor:pointer}.nwsp-image-adjust[hidden]{display:none}

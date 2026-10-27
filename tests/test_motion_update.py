@@ -26,7 +26,8 @@ class MotionUpdate(unittest.TestCase):
    self.assertTrue((MODULE/f'template/motion/{name}.jpg').is_file())
   self.assertIn('MIT',(MODULE/'template/motion/LICENSE.txt').read_text())
  def test_updater_packaging_includes_source(self):
-  self.assertIn('update_0.1.0_0.2.0',(ROOT/'scripts/build.py').read_text())
+  self.assertTrue((ROOT/'updates/update_0.1.0_0.2.0/install/config.php').is_file())
+  self.assertIn('update_0.2.0_0.3.0',(ROOT/'scripts/build.py').read_text())
  def test_native_update_language_uses_add_and_update_tags(self):
   resources=ET.parse(UPDATE/'langs/en.xml').getroot()
   self.assertFalse(resources.findall('string'),'Native updater ignores installation-only string tags')

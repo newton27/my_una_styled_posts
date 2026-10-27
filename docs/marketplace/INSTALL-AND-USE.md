@@ -22,3 +22,24 @@ Motion includes two built-in four-second loops and uploads of MP4, WebM, MOV or 
 Uploads require UNA's configured FFmpeg, PHP fileinfo/proc_open, ffprobe beside FFmpeg or in `/usr/bin` or `/usr/local/bin`, and a working native local conversion cron. Remote-only conversion is not supported in this iteration. Keep the page's processing message visible; do not repeatedly submit while waiting. Failed conversion can be replaced through Edit; the previous background remains available.
 
 For an existing **0.1.0** installation, back up first and extract the dedicated updater ZIP into the module's `updates/` directory. Verify `modules/newton/my_una_styled_posts/updates/update_0.1.0_0.2.0/install/config.php`, then run the native Studio update. Do not replace this with an uninstall/reinstall.
+
+
+## 0.3.0 editor candidate
+
+Text backdrop offers None or Box, a color, opacity and padding. Adjust image offers horizontal/vertical position, zoom and Reset. Crops preserve the original file; the framing follows the card's shape. Changing to another image resets framing. Text direction offers Automatic, Left to right and Right to left. Amiri is bundled locally; Arabic Modern, Friendly and Book use the device's fonts and may look different on different devices.
+
+Find background photos opens Pexels or Unsplash separately so your draft stays open. Download a free image there, check its license and usage terms, then use Upload photo. This is a set of links, not an integrated stock-photo search. Browse Styled Posts now offers Older posts and respects the audience of every post.
+
+### Administrator font packs
+
+Create `storage/nw_styled_posts_fonts/` under the UNA site and upload local WOFF2 fonts and their licenses there. This directory is outside module source so updates preserve it. Add `fonts.json` containing a list such as:
+
+```json
+[{"id":"my_arabic","label":"My Arabic font","file":"MyArabic.woff2","license":"MyArabic-LICENSE.txt"}]
+```
+
+Use at most 32 font entries, each with a unique lowercase ID (letter first, then letters/digits/underscores, up to 24 characters), a label up to 80 characters, a WOFF2 file up to 2 MiB, and a nonempty license text file. Filenames must be simple basenames. No CSS, PHP or remote URLs are accepted. Install only fonts licensed for website embedding and redistribution. Studio reports ignored entries. Members can select registered fonts but cannot install them. This version uses administrator file upload through the host's file manager; it has no Studio font-upload button. Removing a font makes affected cards use a readable fallback. Fonts are publicly served, not private media.
+
+### Upgrade route
+
+Sites on 0.1.0 must first apply the existing 0.1.0-to-0.2.0 updater, then the 0.2.0-to-0.3.0 updater. Do not copy 0.3.0 source into an updater labelled 0.2.0. Existing immutable 0.2.0 ZIPs remain unchanged. Native 0.3.0 validation and motion upload testing are release gates; a prepared package is not evidence of a completed site update.

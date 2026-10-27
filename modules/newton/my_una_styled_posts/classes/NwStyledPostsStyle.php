@@ -2,6 +2,8 @@
 /** Shared allowlist for the editor, server validation and saved-card rendering. */
 class NwStyledPostsStyle
 {
+    const FIELDS = ['font_name','font_size','text_color','text_align','background','background_color','text_backdrop','backdrop_color','backdrop_opacity','backdrop_padding','image_x','image_y','image_zoom','text_direction'];
+    const EXTRA_DEFAULTS = ['text_backdrop'=>'none','backdrop_color'=>'#000000','backdrop_opacity'=>65,'backdrop_padding'=>12,'image_x'=>50,'image_y'=>50,'image_zoom'=>100,'text_direction'=>'auto'];
     const MAX_TEXT = 500;
     const MIN_SIZE = 18;
     const MAX_SIZE = 96;
@@ -15,6 +17,10 @@ class NwStyledPostsStyle
             'modern' => ['label' => 'Modern', 'family' => 'Arial, sans-serif'],
             'handwritten' => ['label' => 'Handwritten', 'family' => 'NW Caveat, cursive'],
             'editorial' => ['label' => 'Editorial', 'family' => 'NW Playfair, Georgia, serif'],
+            'amiri' => ['label'=>'Amiri · عربي','family'=>'NW Amiri, serif'],
+            'arabic_modern' => ['label'=>'Arabic Modern · عربي','family'=>'Tahoma, Arial, sans-serif'],
+            'rounded' => ['label'=>'Friendly','family'=>'Trebuchet MS, Arial, sans-serif'],
+            'book' => ['label'=>'Book','family'=>'Palatino Linotype, Book Antiqua, Georgia, serif'],
             'mono' => ['label' => 'Typewriter', 'family' => 'Courier New, monospace'],
         ];
         $backgrounds = [
@@ -35,29 +41,39 @@ class NwStyledPostsStyle
         unset($item);
         foreach ($backgrounds as $id => &$item) $item['enabled'] = !function_exists('getParam') || getParam('nw_styled_posts_background_'.$id) === 'on';
         unset($item);
+        require_once __DIR__.'/NwStyledPostsFontPacks.php';
+        foreach (NwStyledPostsFontPacks::load(NwStyledPostsFontPacks::directory())['fonts'] as $id=>$font) {unset($font['path']);$fonts[$id]=$font;}
         return ['fonts' => $fonts, 'backgrounds' => $backgrounds];
     }
 
     public static function normalize(array $input, array $catalog): array
     {
-        $out = array_replace(['font_name'=>'classic','font_size'=>48,'text_color'=>'#FFFFFF','text_align'=>'center','background'=>'aurora','background_color'=>'#6554C0'], array_intersect_key($input, array_flip(['font_name','font_size','text_color','text_align','background','background_color'])));
+        $out = array_replace(['font_name'=>'classic','font_size'=>48,'text_color'=>'#FFFFFF','text_align'=>'center','background'=>'aurora','background_color'=>'#6554C0'], array_intersect_key($input, array_flip(self::FIELDS)));
+        $out = array_replace(self::EXTRA_DEFAULTS,$out);
         foreach (['font_name'=>'fonts','background'=>'backgrounds'] as $key=>$group) {
             if (!is_string($out[$key]) || empty($catalog[$group][$out[$key]]['enabled'])) throw new InvalidArgumentException('Choose an enabled '.$key.'.');
         }
         $size = $out['font_size'];
         if ((!is_int($size) && (!is_string($size) || !preg_match('/^\d{2}$/D',$size))) || (int)$size < self::MIN_SIZE || (int)$size > self::MAX_SIZE) throw new InvalidArgumentException('Font size must be between 18 and 96.');
         $out['font_size'] = (int)$size;
-        foreach (['text_color','background_color'] as $key) {
+        foreach (['text_color','background_color','backdrop_color'] as $key) {
             if (!is_string($out[$key]) || !preg_match('/^#[A-Fa-f0-9]{6}$/D',$out[$key])) throw new InvalidArgumentException('Choose a valid six-digit color.');
             $out[$key] = strtoupper($out[$key]);
         }
         if (!is_string($out['text_align']) || !in_array($out['text_align'],['left','center','right'],true)) throw new InvalidArgumentException('Choose left, center or right alignment.');
+        foreach (['text_backdrop'=>['none','box'],'text_direction'=>['auto','ltr','rtl']] as $key=>$allowed) if (!is_string($out[$key]) || !in_array($out[$key],$allowed,true)) throw new InvalidArgumentException('Choose a valid '.$key.'.');
+        foreach (['backdrop_opacity'=>[0,100],'backdrop_padding'=>[0,32],'image_x'=>[0,100],'image_y'=>[0,100],'image_zoom'=>[100,250]] as $key=>[$min,$max]) {
+            $v=$out[$key];
+            if ((!is_int($v) && (!is_string($v) || !preg_match('/^\d{1,3}$/D',$v))) || (int)$v<$min || (int)$v>$max) throw new InvalidArgumentException('Choose '.$key.' between '.$min.' and '.$max.'.');
+            $out[$key]=(int)$v;
+        }
         return $out;
     }
 
     public static function forDisplay(array $input, array $catalog): array
     {
         $fallback = ['font_name'=>'classic','font_size'=>48,'text_color'=>'#FFFFFF','text_align'=>'center','background'=>'solid','background_color'=>'#343168'];
+        $fallback=array_merge($fallback,self::EXTRA_DEFAULTS);
         $background=$input['background']??'solid';
         if (!is_string($background) || empty($catalog['backgrounds'][$background]['enabled'])) {
             $input['background']='solid';$input['background_color']='#343168';$input['text_color']='#FFFFFF';

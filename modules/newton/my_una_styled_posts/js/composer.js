@@ -92,7 +92,7 @@
         const config = JSON.parse(root.querySelector('.nwsp-config').textContent);
         const state = { ...config.values };
         const card = root.querySelector('.nwsp-card');
-        const quote = card.querySelector('.nwsp-text');
+        const quote = card.querySelector('.nwsp-text-content') || card.querySelector('.nwsp-text');
         const fileInput = form.querySelector('[name="background_upload"]');
         const remove = form.querySelector('[name="remove_background"]');
         let objectUrl = '';
@@ -101,8 +101,9 @@
         const selectedPhoto = root.querySelector('[name=background_photo]');
         let ownImage = selectedPhoto && Number(selectedPhoto.value)>0 && config.photos.imageBase ? config.photos.imageBase + selectedPhoto.value : config.backgroundUrl;
         const syncField = (key, value) => {
-            const field = form.querySelector('[name="' + key + '"]');
-            if (field) field.value = String(value);
+            let field = form.querySelector('[name="' + key + '"]');
+            if (!field) {field=document.createElement('input');field.type='hidden';field.name=key;root.append(field);}
+            field.value = String(value);
         };
         function update() {
             if (config.available === false) {
@@ -111,6 +112,12 @@
             }
             source.maxLength = 1000; // UTF-16 pairs: server validates the exact 500-code-point limit.
             quote.textContent = source.value;
+            card.querySelector('.nwsp-text').dir=state.text_direction;
+            const rgb=state.backdrop_color.slice(1).match(/../g).map(v=>parseInt(v,16));
+            card.style.setProperty('--nwsp-backdrop',state.text_backdrop==='box'?'rgba('+rgb.join(',')+','+Number(state.backdrop_opacity)/100+')':'transparent');
+            card.style.setProperty('--nwsp-backdrop-padding',(state.text_backdrop==='box'?state.backdrop_padding:0)+'px');
+            card.style.setProperty('--nwsp-image-x',state.image_x+'%');card.style.setProperty('--nwsp-image-y',state.image_y+'%');card.style.setProperty('--nwsp-image-zoom',Number(state.image_zoom)/100);
+            root.querySelectorAll('[data-output]').forEach(o=>{const k=o.dataset.output;const control=root.querySelector('[data-control="'+k+'"]');o.textContent=state[k]+(control?.dataset.unit||'');});
             const bg = config.catalog.backgrounds[state.background];
             card.style.backgroundColor = state.background_color;
             card.style.backgroundImage = bg.css;
@@ -142,6 +149,7 @@
                 if (img.getAttribute('src') !== picture) img.src = picture;
                 if (!shade) { shade = document.createElement('span'); shade.className = 'nwsp-shade'; shade.setAttribute('aria-hidden', 'true'); card.prepend(shade); }
             } else if (!motion) { if (img) img.remove(); if (shade) shade.remove(); }
+            root.querySelector('.nwsp-image-adjust').hidden=!!motion || !picture;
             root.querySelectorAll('[data-background]').forEach(el => el.setAttribute('aria-pressed', el.dataset.background === state.background ? 'true' : 'false'));
             root.querySelectorAll('[data-align]').forEach(el => el.setAttribute('aria-pressed', el.dataset.align === state.text_align ? 'true' : 'false'));
             const overflow = fitCard(card);
@@ -154,13 +162,15 @@
             if (fileInput && !fileInput.validity.valid) message=fileInput.validationMessage;
             root.querySelector('[data-feedback]').textContent = message;
         }
-        root.addEventListener('input', e => { const key = e.target.dataset.control; if (key) { state[key] = e.target.value; update(); } });
+        function resetImage() {state.image_x=50;state.image_y=50;state.image_zoom=100;for(const k of ['image_x','image_y','image_zoom'])root.querySelector('[data-control="'+k+'"]').value=state[k];}
+        root.querySelector('[data-reset-image]').addEventListener('click',()=>{resetImage();update();});
+        root.addEventListener('input' , e => { const key = e.target.dataset.control; if (key) { state[key] = e.target.value; update(); } });
         root.addEventListener('change', e => { const key = e.target.dataset.control; if (key) { state[key] = e.target.value; update(); } });
         root.addEventListener('click', e => {
             const bg = e.target.closest('[data-background]');
             const align = e.target.closest('[data-align]');
             if (bg) {
-                state.background = bg.dataset.background; ownImage = ''; ownMotion=null;
+                resetImage();state.background = bg.dataset.background; ownImage = ''; ownMotion=null;
                 if (selectedPhoto) selectedPhoto.value = '';
                 if (fileInput) fileInput.setCustomValidity('');
                 if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = ''; }
@@ -187,7 +197,7 @@
                     root.querySelector('[data-feedback]').textContent = fileInput.validationMessage;
                     return;
                 }
-                objectUrl = URL.createObjectURL(file); ownImage = motion ? '' : objectUrl;ownMotion=motion?{state:file.type==='image/gif'?'preview-gif':'ready',clip:file.type==='image/gif'?'':objectUrl,poster:''}:null;
+                resetImage();objectUrl = URL.createObjectURL(file); ownImage = motion ? '' : objectUrl;ownMotion=motion?{state:file.type==='image/gif'?'preview-gif':'ready',clip:file.type==='image/gif'?'':objectUrl,poster:''}:null;
                 if (motion && file.type!=='image/gif') {
                     const probe=document.createElement('video');probe.preload='metadata';probe.muted=true;
                     const validate=()=>{if(objectUrl!==probe.src)return;if (!Number.isFinite(probe.duration) || probe.duration<3 || probe.duration>5 || probe.videoWidth>1280 || probe.videoHeight>1280) {fileInput.setCustomValidity('Choose a 3–5 second video, no larger than 1280 pixels per side.');root.querySelector('[data-feedback]').textContent=fileInput.validationMessage;ownMotion=originalMotion;ownImage=config.backgroundUrl;update();}};
@@ -242,7 +252,7 @@
                             if (fileInput) { fileInput.value=''; fileInput.setCustomValidity(''); }
                             if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl=''; }
                             if (remove) remove.checked=false;
-                            ownImage=item.url; ownMotion=null; update(); close();
+                            resetImage();ownImage=item.url; ownMotion=null; update(); close();
                         });
                         img.src=item.url;
                         grid.append(button);
