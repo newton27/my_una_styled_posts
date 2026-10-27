@@ -1,0 +1,14 @@
+test_entry_schema_has_no_obsolete_attachment_columns (test_native_contracts.NativeContracts.test_entry_schema_has_no_obsolete_attachment_columns) ... ok
+test_language_uses_una_resources_root (test_native_contracts.NativeContracts.test_language_uses_una_resources_root) ... ok
+test_request_is_una_dispatcher_not_an_independent_bootstrap (test_native_contracts.NativeContracts.test_request_is_una_dispatcher_not_an_independent_bootstrap) ... ok
+test_native_files_exist (test_package.PackageContract.test_native_files_exist) ... ok
+test_native_identity (test_package.PackageContract.test_native_identity) ... ok
+test_only_module_source_paths (test_package.PackageContract.test_only_module_source_paths) ... ok
+test_registered_class_files_exist (test_package.PackageContract.test_registered_class_files_exist) ... ok
+test_sql_statements_survive_una_line_concatenation (test_package.PackageContract.test_sql_statements_survive_una_line_concatenation) ... ok
+test_native_service_calls_have_valid_php_serialization (test_serialization.SerializedRegistrations.test_native_service_calls_have_valid_php_serialization) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.024s
+
+OK

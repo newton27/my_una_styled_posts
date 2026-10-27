@@ -1,0 +1,13 @@
+@font-face{font-family:'NW Caveat';src:url('../fonts/Caveat.ttf') format('truetype');font-weight:400 700;font-display:swap}
+@font-face{font-family:'NW Playfair';src:url('../fonts/PlayfairDisplay.ttf') format('truetype');font-weight:400 900;font-display:swap}
+.nwsp-card{container-type:inline-size;isolation:isolate;position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:300px;aspect-ratio:1.3;box-sizing:border-box;padding:clamp(24px,6%,56px);border-radius:16px;background-size:cover;overflow:hidden}
+.nwsp-card .nwsp-text{position:relative;z-index:2;width:100%;font-size:var(--nwsp-fit,var(--nwsp-size,48px));font-weight:600;line-height:1.2;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;text-wrap:pretty;text-shadow:0 1px 12px #00000017}
+.nwsp-background,.nwsp-shade{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.nwsp-shade{z-index:1;background:linear-gradient(0deg,#0000004d,#00000024)}
+.nwsp-card.nwsp-overflow{aspect-ratio:auto;height:auto;min-height:320px;overflow:visible}
+.nwsp-card.nwsp-overflow .nwsp-background,.nwsp-card.nwsp-overflow .nwsp-shade{border-radius:inherit}
+.nwsp-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:24px}
+.nwsp-gallery a{text-decoration:none;color:inherit}
+.nwsp-gallery .nwsp-card{min-height:280px}
+@media(max-width:480px){.nwsp-card{min-height:300px;border-radius:12px}}
+@media(prefers-reduced-motion:reduce){.nwsp-card *{transition:none!important}}

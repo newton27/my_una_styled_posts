@@ -1,0 +1,50 @@
+<?php
+error_reporting(E_ALL);
+set_error_handler(function($n,$m){throw new ErrorException($m,0,$n);});
+define('BX_DOL',1);
+function check($condition,$message){if(!$condition)throw new RuntimeException($message);$GLOBALS['checks']++;}
+function rejects($fn,$message){try{$fn();}catch(InvalidArgumentException $e){check(true,$message);return;}throw new RuntimeException($message);}
+$GLOBALS['checks']=0;
+$file=__DIR__.'/../modules/newton/my_una_styled_posts/classes/NwStyledPostsStyle.php';
+check(is_file($file),'Style validator must exist');
+require $file;
+$catalog=NwStyledPostsStyle::catalog();
+$s=NwStyledPostsStyle::normalize([], $catalog);
+check($s['font_name']==='classic','Default classic font');
+check($s['font_size']===48,'Default font size');
+foreach ([17,97,'48px',[],null] as $bad) rejects(fn()=>NwStyledPostsStyle::normalize(['font_size'=>$bad],$catalog),'Reject invalid font size');
+foreach (['<style>','body;display:none','unknown',[]] as $bad) rejects(fn()=>NwStyledPostsStyle::normalize(['font_name'=>$bad],$catalog),'Reject invalid font');
+foreach (['red','#12345','url(javascript:alert(1))',[]] as $bad) rejects(fn()=>NwStyledPostsStyle::normalize(['text_color'=>$bad],$catalog),'Reject invalid color');
+foreach (['justify','CENTER',[]] as $bad) rejects(fn()=>NwStyledPostsStyle::normalize(['text_align'=>$bad],$catalog),'Reject invalid alignment');
+rejects(fn()=>NwStyledPostsStyle::normalize(['background'=>'url(https://evil.test)'],$catalog),'Reject arbitrary background');
+$catalog['fonts']['handwritten']['enabled']=false;
+rejects(fn()=>NwStyledPostsStyle::normalize(['font_name'=>'handwritten'],$catalog),'Reject disabled font');
+$catalog['backgrounds']['sunset']['enabled']=false;
+rejects(fn()=>NwStyledPostsStyle::normalize(['background'=>'sunset'],$catalog),'Reject disabled background');
+$f=NwStyledPostsStyle::forDisplay(['font_name'=>'handwritten','background'=>'sunset'],$catalog);
+check($f['font_name']==='classic' && $f['background']==='solid','Disabled choices get readable fallback');
+check(NwStyledPostsStyle::validateText("Hello\n世界 👋")==="Hello\n世界 👋",'Preserve multiline Unicode');
+rejects(fn()=>NwStyledPostsStyle::validateText('  '),'Reject empty text');
+rejects(fn()=>NwStyledPostsStyle::validateText(str_repeat('a',501)),'Reject excessive text');
+check(strlen(NwStyledPostsStyle::validateText(str_repeat('a',500)))===500,'Allow max length');
+rejects(fn()=>NwStyledPostsStyle::validateText("\xFF"),'Reject invalid UTF8');
+check(str_contains(NwStyledPostsStyle::escape('<script>"x"</script>'),'&lt;script&gt;'),'Escape markup');
+$png=base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lS8AAAAASUVORK5CYII=');
+$temp=tempnam(sys_get_temp_dir(),'nwsp-test');file_put_contents($temp,$png);
+check(NwStyledPostsStyle::validateImage($temp,'image/png')['width']===1,'Validate real PNG');
+rejects(fn()=>NwStyledPostsStyle::validateImage($temp,'image/jpeg'),'Reject spoofed MIME');
+file_put_contents($temp,'<svg xmlns="http://www.w3.org/2000/svg"/>');
+rejects(fn()=>NwStyledPostsStyle::validateImage($temp,'image/svg+xml'),'Reject SVG');
+unlink($temp);
+check(NwStyledPostsStyle::contrast('#000000','#FFFFFF')>20,'Correct contrast ratio');
+$catalog=NwStyledPostsStyle::catalog();
+$catalog['fonts']['classic']['enabled']=false;
+$editor=NwStyledPostsStyle::forDisplay([], $catalog);
+require_once $file; // Current display fallback is not a safe editor default.
+check(method_exists('NwStyledPostsStyle','forEditor'),'Separate enabled editor state from display fallback');
+$editor=NwStyledPostsStyle::forEditor([], $catalog);
+check($catalog['fonts'][$editor['font_name']]['enabled'],'Editor picks an enabled font');
+$catalog['backgrounds']['midnight']['enabled']=false;
+$display=NwStyledPostsStyle::forDisplay(['background'=>'midnight','text_color'=>'#FFFFFF','background_color'=>'#FFFFFF'],$catalog);
+check(NwStyledPostsStyle::contrast($display['text_color'],$display['background_color'])>=4.5,'Disabled preset has readable fallback colors');
+echo $GLOBALS['checks']." style assertions passed\n";

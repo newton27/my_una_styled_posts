@@ -1,0 +1,46 @@
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
+const { chromium } = require(require.resolve('playwright', { paths: [process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES] }));
+(async () => {
+ const packaged = process.env.CHROMIUM_PACKAGE_ROOT ? (await import(pathToFileURL(path.join(process.env.CHROMIUM_PACKAGE_ROOT,'build/index.js')).href)).default : null;
+ const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-gpu','--no-zygote','--single-process'], ...(packaged ? {executablePath:process.env.CHROME_EXECUTABLE_PATH || await packaged.executablePath()} : {})});
+ const page=await browser.newPage({viewport:{width:1280,height:1050},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(pathToFileURL(path.resolve('preview/index.html')).href);
+ await page.evaluate(()=>document.fonts.ready);
+ assert.equal(await page.locator('[data-background]').count(),10);
+ assert.equal(await page.locator('[data-control=font_name] option').count(),5);
+ await page.locator('[name=text]').fill('<script>alert(1)</script>\nHello 世界 👋');
+ assert.equal(await page.locator('.nwsp-text').textContent(),'<script>alert(1)</script>\nHello 世界 👋');
+ assert.equal(await page.locator('.nwsp-text script').count(),0);
+ await page.locator('[data-control=font_name]').selectOption('editorial');
+ assert.equal(await page.locator('[name=font_name]').inputValue(),'editorial');
+ await page.locator('[data-background=mountains]').click();
+ assert.equal(await page.locator('[name=background]').inputValue(),'mountains');
+ assert.match(await page.locator('.nwsp-background').getAttribute('src'),/mountains.svg/);
+ await page.locator('[data-align=right]').click();
+ assert.equal(await page.locator('[name=text_align]').inputValue(),'right');
+ await page.locator('[data-control=text_color]').fill('#332244');
+ assert.equal(await page.locator('[name=text_color]').inputValue(),'#332244');
+ for(const width of [320,375,768,1280]){
+  await page.setViewportSize({width,height:1000});
+  await page.locator('[name=text]').fill('世'.repeat(500));
+  await page.waitForTimeout(100);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,`No horizontal scroll at ${width}`);
+  const fit=await page.locator('.nwsp-card').evaluate(el=>{const t=el.querySelector('.nwsp-text'),c=getComputedStyle(el);return t.scrollHeight<=el.clientHeight-parseFloat(c.paddingTop)-parseFloat(c.paddingBottom)+2;});
+  assert.equal(fit,true,`All text visible at ${width}`);
+ }
+ await page.locator('[name=text]').fill('a'.repeat(501));
+ assert.equal(await page.locator('[name=text]').evaluate(e=>e.checkValidity()),false);
+ await page.locator('[name=text]').fill("A little kindness\ncan change someone's\nwhole day.");
+ await page.locator('[data-control=font_name]').selectOption('handwritten');
+ await page.locator('[data-background=midnight]').click();
+ await page.locator('[data-align=center]').click();
+ await page.locator('[data-control=text_color]').fill('#ffffff');
+ await page.setViewportSize({width:1280,height:1120});
+ await page.waitForTimeout(150);
+ await page.screenshot({path:'preview/editor.png',fullPage:true});
+ assert.deepEqual(errors,[]);
+ await browser.close();console.log('Editor browser checks passed: controls, escaping, four viewport widths, overflow and length limit.');
+})().catch(e=>{console.error(e);process.exit(1)});

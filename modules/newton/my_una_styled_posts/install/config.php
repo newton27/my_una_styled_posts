@@ -1,0 +1,22 @@
+<?php
+$aConfig = [
+    'type' => BX_DOL_MODULE_TYPE_MODULE,
+    'name' => 'nw_styled_posts',
+    'title' => 'My UNA Styled Posts',
+    'note' => 'Editable quotes and short statements with expressive fonts and backgrounds.',
+    'version' => '0.1.0',
+    'vendor' => 'My UNA World',
+    'compatible_with' => ['15.0.x'],
+    'home_dir' => 'newton/my_una_styled_posts/',
+    'home_uri' => 'styled_posts',
+    'db_prefix' => 'nw_styled_posts_',
+    'class_prefix' => 'NwStyledPosts',
+    'language_category' => 'My UNA Styled Posts',
+    'storages' => ['nw_styled_posts_backgrounds'],
+    'install' => ['execute_sql' => 1, 'update_languages' => 1, 'clear_db_cache' => 1],
+    'uninstall' => ['execute_sql' => 1, 'update_languages' => 1, 'update_relations' => 1, 'clear_db_cache' => 1],
+    'enable' => ['execute_sql' => 1, 'update_relations' => 1, 'clear_db_cache' => 1],
+    'disable' => ['execute_sql' => 1, 'update_relations' => 1, 'clear_db_cache' => 1],
+    'dependencies' => [],
+    'relations' => ['bx_timeline'],
+];

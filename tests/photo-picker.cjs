@@ -1,0 +1,23 @@
+const assert=require('node:assert/strict');const path=require('node:path');const {pathToFileURL}=require('node:url');
+const {chromium}=require(require.resolve('playwright',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES]}));
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_EXECUTABLE_PATH,args:['--no-sandbox','--disable-gpu','--no-zygote','--single-process']});const page=await browser.newPage({viewport:{width:375,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(pathToFileURL(path.resolve('preview/index.html')).href);
+ await page.evaluate(()=>{window.photoMode='normal';window.photoCalls=[];window.fetch=async url=>{photoCalls.push(url);if(photoMode==='error')throw new Error('offline');return {ok:true,json:async()=>photoMode==='absent'?{available:false,items:[],next:0}:photoMode==='empty'?{available:true,items:[],next:0}:{available:true,items:[{id:url.includes('before=')?2:1,title:'<b>My photo</b>',url:photoMode==='pending'?'https://photo-picker.invalid/slow.png':'../modules/newton/my_una_styled_posts/template/images/backgrounds/botanical.svg'}],next:url.includes('before=')?0:1}};};});
+ assert.equal(await page.locator('[data-choose-photos]').count(),1,'Choose button exists');
+ await page.locator('[data-choose-photos]').click();await page.locator('[data-photo-id="1"]').waitFor();
+ assert.equal(await page.locator('[data-photo-id="1"] b').count(),0,'Title rendered as text');
+ await page.locator('[data-more-photos]').click();await page.locator('[data-photo-id="2"]').waitFor();
+ await page.locator('[data-photo-id="2"]').click();assert.equal(await page.locator('[name=background_photo]').inputValue(),'2');
+ assert.equal(await page.locator('dialog').evaluate(e=>e.open),false);assert.match(await page.locator('.nwsp-background').getAttribute('src'),/botanical/);
+ await page.locator('[data-choose-photos]').click();await page.locator('[data-photo-id="1"]').waitFor();await page.keyboard.press('Escape');assert.equal(await page.locator('[name=background_photo]').inputValue(),'2','Cancel keeps selection');
+ assert.equal(await page.locator('[data-choose-photos]').evaluate(e=>e===document.activeElement),true,'Focus restored');
+ await page.locator('[data-background=midnight]').click();assert.equal(await page.locator('[name=background_photo]').inputValue(),'','Preset clears selection');
+ await page.locator('[data-choose-photos]').click();await page.locator('[data-photo-id="1"]').click();
+ await page.locator('[name=background_upload]').setInputFiles({name:'own.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Y9ZQmcAAAAASUVORK5CYII=','base64')});assert.equal(await page.locator('[name=background_photo]').inputValue(),'','Upload clears selection');
+ let held,heldResolve;const heldReady=new Promise(resolve=>heldResolve=resolve);await page.route('https://photo-picker.invalid/slow.png',route=>{held=route;heldResolve();});await page.evaluate(()=>window.photoMode='pending');await page.locator('[data-choose-photos]').click();await page.locator('[data-photo-id="1"]').waitFor();assert.equal(await page.locator('[data-photo-id="1"]').isEnabled(),false,'Unloaded photo cannot replace existing background');await heldReady;await held.fulfill({status:404,body:''});await page.waitForFunction(()=>document.querySelector('[data-photo-id="1"] span').textContent==='Photo unavailable');assert.equal(await page.locator('[name=background_upload]').evaluate(e=>e.files.length),1,'Failed thumbnail preserves existing upload');assert.equal(await page.locator('[name=background_photo]').inputValue(),'','Failed thumbnail does not set selected source');await page.locator('[data-close-photos]').click();
+ for(const mode of ['empty','absent','error']) {await page.evaluate(m=>window.photoMode=m,mode);await page.locator('[data-choose-photos]').click();await page.waitForFunction(()=>!document.querySelector('[data-photo-status]').textContent.includes('Loading'));const msg=await page.locator('[data-photo-status]').textContent();assert.match(msg,mode==='empty'?/No photos/:mode==='absent'?/not available/:/could not/);await page.locator('[data-close-photos]').click();}
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true,'Mobile has no horizontal overflow');
+ assert.equal(await page.locator('.demo-message').textContent(),'','Picker never submits post');assert.deepEqual(errors,[]);
+ await browser.close();console.log('Photo picker browser checks passed: selection, pagination, cancel, escaping, upload/preset clearing, unavailable/empty/error, mobile and no submit.');
+})().catch(e=>{console.error(e);process.exit(1)});
