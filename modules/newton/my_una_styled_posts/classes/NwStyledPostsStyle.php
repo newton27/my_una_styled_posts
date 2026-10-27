@@ -28,6 +28,8 @@ class NwStyledPostsStyle
             'gingham' => ['label' => 'Gingham', 'kind' => 'pattern', 'css' => 'repeating-linear-gradient(0deg,#ffffff14 0 18px,transparent 18px 36px),repeating-linear-gradient(90deg,#ffffff18 0 18px,transparent 18px 36px),linear-gradient(#416768,#416768)'],
             'mountains' => ['label' => 'Quiet mountains', 'kind' => 'picture', 'file' => 'mountains.svg', 'css' => 'none'],
             'botanical' => ['label' => 'Botanical', 'kind' => 'picture', 'file' => 'botanical.svg', 'css' => 'none'],
+            'motion_tides' => ['label' => 'Moving tides', 'kind' => 'motion', 'clip' => 'tides.mp4', 'poster' => 'tides.jpg', 'css' => 'linear-gradient(135deg,#145965,#257d8e)'],
+            'motion_glow' => ['label' => 'Soft glow', 'kind' => 'motion', 'clip' => 'glow.mp4', 'poster' => 'glow.jpg', 'css' => 'linear-gradient(135deg,#56385b,#9d5275)'],
         ];
         foreach ($fonts as $id => &$item) $item['enabled'] = !function_exists('getParam') || getParam('nw_styled_posts_font_'.$id) === 'on';
         unset($item);

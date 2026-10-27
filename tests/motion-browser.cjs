@@ -1,0 +1,38 @@
+const assert=require('node:assert/strict');
+const {chromium}=require(require.resolve('playwright',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES]}));
+(async()=>{
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_EXECUTABLE_PATH,args:['--no-sandbox','--disable-gpu','--no-zygote','--single-process']});
+ const page=await browser.newPage({viewport:{width:1000,height:1100},reducedMotion:'reduce'});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(process.env.MOTION_PREVIEW_URL||'http://127.0.0.1:8934/preview/index.html');
+ await page.locator('.nwsp-motion-choices summary').click();
+ assert.equal(await page.locator('[aria-label="Motion backgrounds"] [data-background]').count(),2);
+ await page.locator('[data-background=motion_tides]').click();
+ assert.equal(await page.locator('[name=background]').inputValue(),'motion_tides');
+ const video=page.locator('video.nwsp-motion');await video.scrollIntoViewIfNeeded();
+ assert.equal(await video.getAttribute('src'),null,'Reduced motion does not fetch/play clip');
+ assert.match(await video.getAttribute('poster'),/tides.jpg/);
+ assert.equal(await video.evaluate(v=>v.muted && v.loop && v.playsInline && v.paused),true);
+ await page.locator('[data-motion-toggle]').click();
+ await page.waitForFunction(()=>!!document.querySelector('video.nwsp-motion').getAttribute('src'));
+ await page.waitForFunction(()=>!document.querySelector('video.nwsp-motion').paused,{timeout:6000});
+ await page.waitForFunction(()=>document.querySelector('[data-motion-toggle]').textContent.includes('Pause'));
+ await page.locator('[data-motion-toggle]').click();assert.equal(await video.evaluate(v=>v.paused),true);
+ await page.locator('[data-background=ocean]').click();assert.equal(await page.locator('video.nwsp-motion').count(),0);
+ assert.equal(await page.locator('[data-motion-toggle]').count(),0);
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.locator('[data-background=motion_glow]').click();await page.locator('video.nwsp-motion').scrollIntoViewIfNeeded();
+ await page.waitForFunction(()=>!document.querySelector('video.nwsp-motion').paused);
+ await page.evaluate(()=>{const space=document.createElement('div');space.id='motion-test-space';space.style.height='2200px';document.body.prepend(space);window.scrollTo(0,0);});
+ await page.waitForFunction(()=>document.querySelector('video.nwsp-motion').paused);
+ await page.evaluate(()=>document.querySelector('#motion-test-space').remove());await page.locator('video.nwsp-motion').scrollIntoViewIfNeeded();
+ await page.waitForFunction(()=>!document.querySelector('video.nwsp-motion').paused);
+ await page.locator('[name=background_upload]').setInputFiles({name:'bad.mp4',mimeType:'video/mp4',buffer:Buffer.from('not video')});
+ // Invalid files must never be accepted by the server; browser load failure also gives feedback.
+ await page.locator('[data-background=midnight]').click();assert.equal(await page.locator('[name=background_upload]').evaluate(e=>e.files.length),0);
+ await page.route('**/motion-test/status',route=>route.fulfill({json:{state:'ready',clip:'/modules/newton/my_una_styled_posts/template/motion/tides.mp4',poster:'/modules/newton/my_una_styled_posts/template/motion/tides.jpg'}}));
+ await page.evaluate(()=>{const card=document.createElement('article');card.className='nwsp-card';card.innerHTML='<video class="nwsp-background nwsp-motion" muted loop playsinline data-motion=\'{"state":"pending","status":"/motion-test/status"}\'></video><div class="nwsp-text">Dynamic Timeline card</div>';document.body.append(card);});
+ const dynamic=page.locator('article.nwsp-card').last();await dynamic.scrollIntoViewIfNeeded();
+ await page.waitForFunction(()=>document.querySelectorAll('video.nwsp-motion').length===1 && document.querySelector('video.nwsp-motion').getAttribute('src')?.includes('tides.mp4'),{timeout:10000});
+ await dynamic.locator('video').evaluate(v=>v.remove());
+ assert.deepEqual(errors,[]);await browser.close();console.log('Motion browser checks passed: picker, reduced motion, explicit play/pause, autoplay, off-screen pause, dynamic pending/ready and preset clearing.');
+})().catch(e=>{console.error(e);process.exit(1)});

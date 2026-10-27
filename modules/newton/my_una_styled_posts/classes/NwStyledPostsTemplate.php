@@ -14,7 +14,7 @@ class NwStyledPostsTemplate extends BxBaseModTextTemplate
     public function card(array $post, bool $dynamic = false): string
     {
         $include=$this->addCss(['card.css'],$dynamic).$this->addJs(['composer.js'],$dynamic);
-        return ($dynamic?$include:'').NwStyledPostsCard::render($post,NwStyledPostsStyle::catalog(),$this->assetBase(),$this->getModule()->getBackgroundUrl($post));
+        return ($dynamic?$include:'').NwStyledPostsCard::render($post,NwStyledPostsStyle::catalog(),$this->assetBase(),$this->getModule()->getBackgroundUrl($post),$this->getModule()->getMotionDescriptor($post));
     }
     function getAuthorDesc($aData, $oProfile)
     {

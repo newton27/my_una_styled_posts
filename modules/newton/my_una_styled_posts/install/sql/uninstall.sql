@@ -14,3 +14,8 @@ DELETE FROM `sys_options_categories` WHERE `name` = 'nw_styled_posts';
 DELETE FROM `sys_options_types` WHERE `name` = 'nw_styled_posts';
 DELETE p,w,b,l FROM `sys_std_pages` p LEFT JOIN `sys_std_widgets` w ON p.`id` = w.`page_id` LEFT JOIN `sys_std_widgets_bookmarks` b ON w.`id` = b.`widget_id` LEFT JOIN `sys_std_pages_widgets` l ON w.`id` = l.`widget_id` WHERE p.`name` = 'nw_styled_posts';
 DROP TABLE IF EXISTS `nw_styled_posts_entries`,`nw_styled_posts_backgrounds`,`nw_styled_posts_cmts`,`nw_styled_posts_reactions`,`nw_styled_posts_reactions_track`,`nw_styled_posts_views_track`;
+DELETE FROM `sys_transcoder_filters` WHERE `transcoder_object` IN ('nw_styled_posts_motion_clip','nw_styled_posts_motion_poster');
+DELETE FROM `sys_objects_transcoder` WHERE `object` IN ('nw_styled_posts_motion_clip','nw_styled_posts_motion_poster');
+DELETE FROM `sys_objects_storage` WHERE `object` = 'nw_styled_posts_motion_files';
+DELETE FROM `sys_storage_tokens` WHERE `object` = 'nw_styled_posts_motion_files';
+DROP TABLE IF EXISTS `nw_styled_posts_motion_files`;

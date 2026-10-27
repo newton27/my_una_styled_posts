@@ -1,0 +1,9 @@
+Moving tides and Soft glow are original procedural animations created for
+My UNA Styled Posts. Copyright (c) 2026 My UNA World.
+
+These MP4 loops and JPEG posters are distributed under the repository's MIT
+license. Commercial redistribution and modification are permitted under its
+terms. No third-party footage, music or stock imagery is included.
+
+Reproducible source: scripts/create_motion_assets.py (NumPy + FFmpeg).
+Each loop is 4 seconds, 640 x 480, 20 fps, silent H.264 MP4.

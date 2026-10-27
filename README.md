@@ -1,3 +1,5 @@
+> Motion backgrounds are being developed as **0.2.0** on `feature/motion-backgrounds`. This branch is a test candidate, not a released update. See [motion validation evidence](docs/evidence/motion-backgrounds-2026-10-27.md).
+
 # My UNA Styled Posts
 
 Development candidate **0.1.0**, targeting UNA 15 RC2 / PHP 8.3. The composer/photo picker have been exercised on myunaworld.com; clean native installation and disable/re-enable preservation have passed on gayjaxonline.com. Authenticated admin comment/live-count and reaction add/change/remove cycles have also passed. Standard-member/non-owner, upload lifecycle, repost and uninstall/reinstall validation remain open. This package does not change UNA core files.

@@ -78,4 +78,7 @@
   <string name="_nw_styled_posts_button_save"><![CDATA[Save changes]]></string>
   <string name="_nw_styled_posts_button_delete"><![CDATA[Delete]]></string>
   <string name="_nw_styled_posts_txt_all_entries_by"><![CDATA[Styled Posts ({0})]]></string>
+  <string name="_nw_styled_posts_option_allow_motion_uploads"><![CDATA[Allow 3–5 second video and GIF backgrounds (requires native video conversion and ffprobe)]]></string>
+  <string name="_nw_styled_posts_option_background_motion_tides"><![CDATA[Background: Moving tides]]></string>
+  <string name="_nw_styled_posts_option_background_motion_glow"><![CDATA[Background: Soft glow]]></string>
 </resources>
