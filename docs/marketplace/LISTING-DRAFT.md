@@ -32,13 +32,15 @@ This standalone module does not require Posts and does not modify UNA core files
 
 **By My UNA World · Version 0.1.0**
 
+**Price: $25 USD**
+
 **Release status:** Release candidate. Remaining member-role, upload lifecycle, repost and uninstall/reinstall validation is pending.
 
 ---
 
 Internal publishing notes — omit this section from the public description:
 
-- Price and Marketplace category have not been selected by the vendor.
+- Vendor-approved price: $25 USD. Marketplace category remains to be selected.
 - The My UNA World account’s Manage Products view has no existing Styled Posts listing.
 - The Marketplace Add control opens a blank New Product dialog; no form fields or save control render. No listing was submitted or saved.
 - Actual live tests include UNA 15.0.0-RC3 / PHP 8.3.6 / MariaDB 10.11.14. Earlier target/reference was UNA 15 RC2; metadata declares 15.0.x. Broader platform coverage is not certified.
