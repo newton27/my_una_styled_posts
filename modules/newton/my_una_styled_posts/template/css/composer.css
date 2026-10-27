@@ -20,7 +20,7 @@
 .nwsp-composer button:focus-visible,.nwsp-composer input:focus-visible,.nwsp-composer select:focus-visible{outline:3px solid #8a69c4;outline-offset:3px}
 @media(max-width:520px){.nwsp-toolbar{grid-template-columns:1fr 1fr}.nwsp-background-heading{display:block}.nwsp-swatch{width:38px;height:38px}.nwsp-swatches{gap:9px}.nwsp-help{line-height:1.5}}
 .nwsp-photo-actions{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 10px}
-.nwsp-photo-actions button,.nwsp-photo-dialog button{border:1px solid #c9b8e3;border-radius:8px;background:#f0eaf9;color:#49316d;padding:10px 14px;font:inherit;cursor:pointer}
+.nwsp-photo-actions button,.nwsp-photo-dialog button,.nwsp-motion-choices [data-upload-motion]{border:1px solid #c9b8e3;border-radius:8px;background:#f0eaf9;color:#49316d;padding:10px 14px;font:inherit;cursor:pointer}
 .nwsp-photo-dialog{box-sizing:border-box;width:min(660px,calc(100vw - 28px));max-height:80vh;padding:20px;border:1px solid #c9b8e3;border-radius:14px;background:#fff;color:#292638;overflow:auto;font:14px/1.5 Arial,sans-serif}
 .nwsp-photo-dialog::backdrop{background:#17102299}
 .nwsp-photo-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
