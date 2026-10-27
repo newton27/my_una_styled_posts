@@ -62,3 +62,21 @@ GitHub repository currently visible in the user's Chrome tab is `newton27/my_una
 - A private QA comment was saved and persisted across reload. Its count changed from 0 to 1 only after reload, and unresolved `__item_note__` / `__meta__` placeholders were visible. A post reaction changed to a thumbs-up without navigation and persisted after reload; numerical feedback/change/removal still needs validation. These interaction findings are open, not release passes.
 
 Remaining: Standard-member/non-owner/guest coverage on this target, uploads and cleanup, comment rendering and immediate counts, reaction count/change/removal, repost/Timeline behavior, native uninstall/reinstall cleanup, and health-log review. No final release or Marketplace publication is authorized by this source checkpoint alone.
+
+## Comment/reaction stabilization follow-up
+
+The target's current Studio reports UNA **15.0.0-RC3**, PHP 8.3.6 and MariaDB 10.11.14. The module's original target description remains UNA 15 RC2; the current test results should be attributed to the observed RC3 runtime.
+
+Traced the raw comment placeholders to the actual selected `modules/boonex/lucid/data/template/system/comment.html`. That older layout embeds `show_notes`, `meta` and pinned-header variables directly, whereas the current `BxBaseCmts::getComment` supplies a separately rendered `header`. Direct header rendering succeeded; rendering the full old theme item exposed the missing placeholders. Clearing template/content/JavaScript caches did not resolve this structural mismatch.
+
+Added module-owned `NwStyledPostsCmts` and `nwsp_comment.html`, retaining the current native author/header/content/actions/replies slots. The adapter uses the module template lookup and leaves the installed theme and UNA core unchanged. Updated the module's native comments registration and explicitly invalidated its `sys_objects_cmts` database cache after applying the test-site repair. Browser verification then showed the author/time and comment text without raw placeholders. The temporary diagnostic method in NwStyledPostsModule was removed and its original SHA-256 verified.
+
+The native reaction implementation defaults to quick Like and hides its counter. Added a module reaction adapter that opens the native selector while retaining the native allowed reaction list and single/multiple-reaction policy; the module menu requests counter/legend display. Native init returns void on success, false on failure: the regression was corrected to reflect that real contract and failed before the corresponding fix. The comment title now contains the native AJAX counter rather than a static number, with a numeric counter label to avoid repeating the word Comments.
+
+Observed native PHP checks after deployment: comments class NwStyledPostsCmts; no raw note/meta placeholders in the rendered comment; title contains bx-cmt-counter markup; reactions class NwStyledPostsVoteReactions; generated click calls toggleDoPopup. Earlier browser add/remove Like actions worked without navigation, with persisted rows and rvotes=1 after adding. The new picker, numerical feedback and live title still require browser verification; PHP markup inspection alone is not an interaction pass.
+
+Anonymous HTTP request to the private QA entry returned **403 Access denied** and did not expose its text. Upload fixture selection could not complete through Chrome; file-URL access must be enabled in the extension. Later, another extension UI blocked further interaction with the post page. No upload is claimed as successful.
+
+Two entries now exist: private QA entry 1 and a new public entry 2 not created by this test run. Uninstall/reinstall is paused to preserve the latter. A private module-data snapshot was created before any potential destructive lifecycle work. No uninstall occurred. No account credentials were reset, no original site content was deleted, and no final release was published.
+
+Local regression suite after these corrections: **11 Python tests and 150 PHP assertions**, plus PHP and JavaScript syntax checks, passed. Remaining gates include real browser comment/count/reaction cycles, photo upload/replacement/removal, Standard-member/non-owner checks, repost/Timeline checks, health logs and the approved uninstall/reinstall cycle.

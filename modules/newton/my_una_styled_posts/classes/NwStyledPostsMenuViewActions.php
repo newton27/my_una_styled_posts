@@ -8,4 +8,12 @@ class NwStyledPostsMenuViewActions extends BxBaseModTextMenuViewActions
     }
     protected function _getMenuItemEditStyledPost($item) { return $this->_getMenuItemByNameActions($item); }
     protected function _getMenuItemDeleteStyledPost($item) { return $this->_getMenuItemByNameActions($item); }
+    protected function _getMenuItemReaction($item, $params = [])
+    {
+        $params['object_options'] = array_merge($params['object_options'] ?? [], [
+            'show_counter' => true,
+            'show_legend' => true,
+        ]);
+        return parent::_getMenuItemReaction($item, $params);
+    }
 }
