@@ -1,4 +1,4 @@
-> **0.3.2 motion library candidate:** twelve new original illustrated loops (fourteen total), named thumbnail choices and a more prominent Motion backgrounds section. Native deployment validation is in progress on gayjaxonline.com. Wider release gates remain open.
+> **0.3.2 motion library candidate:** twelve new original illustrated loops (fourteen total), named thumbnail choices and a more prominent Motion backgrounds section. Deployed and verified through native Studio updates on gayjaxonline.com. All fourteen choices, save/reopen and silent playback passed; wider release gates remain open.
 
 # My UNA Styled Posts
 

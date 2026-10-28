@@ -49,3 +49,7 @@ Sites on 0.1.0 must first apply the existing 0.1.0-to-0.2.0 updater, then the 0.
 Open **Motion backgrounds** to choose from fourteen original silent loops. Each thumbnail has a name; selecting it updates the live preview. The twelve new nature/abstract choices are illustrated animations, not stock footage. Upload video or GIF is available below the grid when enabled by the administrator. Playback still respects reduced-motion preferences and offers Play/Pause.
 
 Update an existing 0.3.0 installation with the native 0.3.0 → 0.3.1 updater in Studio. Existing posts, media and settings are preserved; twelve new background switches appear in module settings.
+
+### 0.3.2 corrective update
+
+0.3.2 fixes editor startup while larger pages are still loading. The tested native route on the authorized test site is0.3.0→0.3.1→0.3.2; do not distribute0.3.1alone. The0.3.1→0.3.2 updater changes files and clears caches only. A direct0.3.0→0.3.2 updater and fresh0.3.2installation still require separate validation before wider release.

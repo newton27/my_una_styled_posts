@@ -1,0 +1,19 @@
+{
+  "module": "nw_styled_posts",
+  "version": "0.3.2",
+  "status": "development candidate; native site validation pending",
+  "source_commit": "a1f7fb09c48a330b889fcb9b63989237ddb520fc",
+  "una_reference_commit": "05466c74ce6bbe4d8579fa901c6dc787d1dcff75",
+  "installer": "my-una-styled-posts-0.3.2-motion-rc1-install.zip",
+  "installer_bytes": 1363511,
+  "installer_sha256": "13a3cb02ef1b70065392c0de4f83b7f011cae15d9553e5aaeef5a05ca8013452",
+  "updater": "my-una-styled-posts-0.3.2-motion-rc1-update-0.3.1-to-0.3.2.zip",
+  "updater_bytes": 1364232,
+  "updater_sha256": "c5427e059666c6d565b7b737c7065a0dccb4bd4654c1693b09c174f73407f962",
+  "remote_runtime_commit": "88851920cde92d942f3393512baf00bbd81a12f7",
+  "build_tree": "1baf64809e8b897f847d35c686f4b88cc625aa6e",
+  "sanitized_remote_tree": "7d825aa1ceef76a190714068c7b4ed882cd4f9c9",
+  "tree_note": "Remote differs from built checkpoint only in documentation sanitization. All73module files match the frozen native updater on live site.",
+  "kit_bytes": 4700462,
+  "kit_sha256": "f04d5fd38178ea5f1fdd72c7b1d521bb452f695db2930d4eb3451d99eff27f9f"
+}

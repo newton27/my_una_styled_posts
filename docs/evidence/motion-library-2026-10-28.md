@@ -20,3 +20,26 @@ Only gayjaxonline.com is authorized. No other site, core file, GitHub tag/releas
 Studio0.3.0→0.3.1 completed;73runtime hashes exact,all3preexistingrows/26settings/2media hashes unchanged,38settings and14enabledmotionchoices. New picker rendered, but real full-page create exposed streaming initialization race: MutationObserver mounted section before trailing JSON existed, throwing null.textContent and leaving it permanently marked mounted. No test post was saved during the failure.
 
 Corrective0.3.2 waits for document parsing and completeJSON/card before marking mounted, and retries child mutations on incomplete composers. NodeVM regression reproduced exacterror RED and then passed. New native0.3.1→0.3.2 updater is file/cacheonly (SQL/language/transcoderstepsdisabled). Fresh reviewer found no additional material concerns; real reload/selection/save/reopen remains mandatory. Responsive grid uses additional columns in wide create forms to avoid oversized thumbnails. Immutable0.3.1 packages retained.
+
+## Final native deployment: 0.3.2 PASS
+Both native Studio actions completed on gayjaxonline.com (0.3.0→0.3.1→0.3.2). Runtimefiles73/73 match the frozen0.3.2 updater hashes, with no drift. The3original post rows and2stored images remain unchanged. All26prior settings survived the first update; all38settings then survived the file-only repair unchanged. Fourteen motion backgrounds are enabled and all28public clip/poster URLs return200. Native staging directories were removed automatically.
+
+Real editor cleanreload initializes successfully: quote counter updates and keyboard expands the prominent picker. All14labeled choices individually select and update their pressedstate. Northern lights loads a4-second clip with muted/loop attributes, readyState4; pause and resume verified. New synthetic private QA post8 saved with audienceOnlyme, reopened with Northern lights selected, cycled allchoices, restored Northern lights and savedchanges. Reopened again retained choice/audience. Existingposts untouched.
+
+Both site error logs show0module-related matches since the successful checkpoint. Screenshot of deployed picker captured from actualedit page, showing all14named thumbnails, prominent heading and Upload video or GIF button. No screenshot or private backup data added toGit.
+
+| Gate | Status | Evidence / next action |
+|---|---|---|
+| Native0.3.0→0.3.1→0.3.2 | PASS | StudioInstall actions and native cleanup |
+| Runtime/data/settings/media preservation | PASS |73hashes,3originalrows,38settings,2images |
+| All14choices and save/reopen | PASS | Real authenticated editor and privateQA8 |
+| Four-second silent playback / pause | PASS | Northern lights browser playback |
+| MediaURL availability | PASS |28/28HTTP200 |
+| Automated checks | PASS |24Python,21PHP programs,Node startup regression,syntax |
+| Nativefresh0.3.2install | NOT TESTED | Separate lifecycle pass |
+| Narrow/mobile and ArabicRTL for expandedgrid | NOT TESTED | Separate live layout pass |
+| Standardmember/nonowner matrix | NOT TESTED | Separate role pass |
+| Video/GIFuploadconversion | NOT TESTED | Explicitly deferred |
+| Widerrelease/Marketplace publication | NOT APPLICABLE | Deployment scope only |
+
+Automatic approval review rejected exporting private backup metadata and historical tests on other sites in README. New evidence and currentREADME were sanitized to retain only authorized-site and genericresults; detailed checkpoint stayed onserver. No permission override or indirect export used.
