@@ -1,55 +1,42 @@
-# Install and use My UNA Styled Posts
+# Install and use My UNA Styled Posts 0.3.2
 
-This is a release candidate for testing, not a final marketplace release.
+Requirements: UNA 15 and PHP 8.3. Native Photos is optional for Choose from my photos; Timeline is required for feed distribution. This module does not require Posts or modify UNA core.
 
-1. Back up a disposable UNA 15 RC2 / PHP 8.3 test installation.
-2. Extract the inner install ZIP into public_html/modules/. The resulting path must be modules/newton/my_una_styled_posts/install/config.php.
-3. Open Studio → Apps → Downloaded and install My UNA Styled Posts. Do not import SQL manually.
-4. Check the Studio launcher and information popup, then configure fonts, backgrounds, uploads and automatic approval.
-5. Review membership posting/edit/delete permissions. Check guest visibility before public deployment.
-6. Use Styled Post in the community composer, or open create-styled-post. Enter text, choose a style and an audience, then Post.
-7. Choose from my photos shows the current profile's active native Photos entries. A selected photo is copied; the post's audience determines who sees that copy. Deleting the original does not remove the post background.
-8. Use Edit to change words/style or replace/remove the background.
+## New installation
 
-This full installer is not a native updater for development installations. Do not reinstall an existing site or apply its uninstall SQL to update files. Existing development sites require a separately reviewed migration/maintenance procedure, including language updates where needed.
+1. Back up the site.
+2. Extract `my-una-styled-posts-0.3.2-install.zip` into the site's `modules/` directory. This ZIP contains `newton/my_una_styled_posts/`. The final path must be `modules/newton/my_una_styled_posts/install/config.php`.
+3. If uploading through a file manager, upload only the actual `my_una_styled_posts` directory under `modules/newton/`. Avoid duplicated `modules/modules/` or `newton/newton/` paths. Development kits may contain a nested `source/modules/` directory; the kit itself is not the installer.
+4. Open Studio → Apps → Downloaded, inspect My UNA Styled Posts, then Install.
+5. Open the module's Studio settings. Configure fonts, backgrounds, photo/motion uploads and automatic approval. Review posting/edit/delete permissions through Memberships.
+6. Create a Styled Post, enter up to 500 characters, choose its design and audience, and Post. Use Edit to change words or styling afterward.
 
-The source kit includes an interactive demonstration in source/preview/index.html. Its Post control does not publish anything.
+## Design and motion
 
-## Motion backgrounds (0.2.0 candidate)
+Text backdrop offers a readable color box with opacity and padding. Image framing saves position and zoom without altering the uploaded original; Reset restores centered framing. Automatic/LTR/RTL text direction supports Arabic and mixed-language quotes. Selecting Amiri changes the font; it does not translate text or interface labels.
 
-Motion includes two built-in four-second loops and uploads of MP4, WebM, MOV or animated GIF. Upload limits are 3–5 seconds, 8 MiB and 1280 pixels on either side. GIFs are converted to silent MP4; their motion preview appears after conversion. Built-in loops work without conversion.
+Motion backgrounds provides fourteen original silent four-second loops, with named thumbnails and Play/Pause. They respect reduced-motion preferences and work without server conversion. The nature choices are illustrated animations.
 
-Uploads require UNA's configured FFmpeg, PHP fileinfo/proc_open, ffprobe beside FFmpeg or in `/usr/bin` or `/usr/local/bin`, and a working native local conversion cron. Remote-only conversion is not supported in this iteration. Keep the page's processing message visible; do not repeatedly submit while waiting. Failed conversion can be replaced through Edit; the previous background remains available.
+Photo backgrounds accept JPG, PNG and WebP up to 8 MiB. Choose from my photos copies an active native Photos image; the Styled Post's audience controls the independent copy. Albums and avatars are excluded. Background copies and motion uploads require Local storage.
 
-For an existing **0.1.0** installation, back up first and extract the dedicated updater ZIP into the module's `updates/` directory. Verify `modules/newton/my_una_styled_posts/updates/update_0.1.0_0.2.0/install/config.php`, then run the native Studio update. Do not replace this with an uninstall/reinstall.
+Video/GIF uploads accept MP4, WebM, MOV and animated GIF, 3–5 seconds, at most 8 MiB and 1280 pixels per side. They require configured local UNA conversion, FFmpeg, ffprobe, PHP fileinfo/process execution, and the normal UNA conversion cron. GIFs become silent MP4s. Wait for conversion rather than repeatedly submitting. A failed replacement retains the saved background.
 
+Pexels and Unsplash links open separate sites. Check the chosen image's usage terms before downloading and uploading it. The links are not an integrated search picker.
 
-## 0.3.0 editor candidate
+## Administrator font packs
 
-Text backdrop offers None or Box, a color, opacity and padding. Adjust image offers horizontal/vertical position, zoom and Reset. Crops preserve the original file; the framing follows the card's shape. Changing to another image resets framing. Text direction offers Automatic, Left to right and Right to left. Amiri is bundled locally; Arabic Modern, Friendly and Book use the device's fonts and may look different on different devices.
-
-Find background photos opens Pexels or Unsplash separately so your draft stays open. Download a free image there, check its license and usage terms, then use Upload photo. This is a set of links, not an integrated stock-photo search. Browse Styled Posts now offers Older posts and respects the audience of every post.
-
-### Administrator font packs
-
-Create `storage/nw_styled_posts_fonts/` under the UNA site and upload local WOFF2 fonts and their licenses there. This directory is outside module source so updates preserve it. Add `fonts.json` containing a list such as:
+Create `storage/nw_styled_posts_fonts/` and place licensed local WOFF2 files plus license texts there. Add `fonts.json`, for example:
 
 ```json
 [{"id":"my_arabic","label":"My Arabic font","file":"MyArabic.woff2","license":"MyArabic-LICENSE.txt"}]
 ```
 
-Use at most 32 font entries, each with a unique lowercase ID (letter first, then letters/digits/underscores, up to 24 characters), a label up to 80 characters, a WOFF2 file up to 2 MiB, and a nonempty license text file. Filenames must be simple basenames. No CSS, PHP or remote URLs are accepted. Install only fonts licensed for website embedding and redistribution. Studio reports ignored entries. Members can select registered fonts but cannot install them. This version uses administrator file upload through the host's file manager; it has no Studio font-upload button. Removing a font makes affected cards use a readable fallback. Fonts are publicly served, not private media.
+Up to 32 entries are accepted. Each needs a unique lowercase ID (letter first, then letters/digits/underscores, up to 24 characters), a label up to 80 characters, a WOFF2 file up to 2 MiB and a nonempty license text. Use simple filenames, not remote URLs, PHP or CSS. Studio reports ignored entries. This is an administrator file-manager workflow, not a member upload or Studio font-upload button. Font files are public; removing a font uses a fallback.
 
-### Upgrade route
+## Existing installations
 
-Sites on 0.1.0 must first apply the existing 0.1.0-to-0.2.0 updater, then the 0.2.0-to-0.3.0 updater. Do not copy 0.3.0 source into an updater labelled 0.2.0. Existing immutable 0.2.0 ZIPs remain unchanged. Native 0.3.0 validation and motion upload testing are release gates; a prepared package is not evidence of a completed site update.
+Do not uninstall/reinstall to upgrade. Use only the native updater matching the installed version. The validated route is 0.1.0 → 0.2.0 → 0.3.0 → 0.3.1 → 0.3.2. Do not stop at 0.3.1. Stage each updater under the module's `updates/` folder, verify its checksum and run Studio Update. There is no certified direct 0.3.0 → 0.3.2 package in this release.
 
-## 0.3.1 motion library
+If My UNA World blocks installation because a safety backup is already running, wait for it to finish and inspect its backup status/logs. Repeated Install clicks do not resolve the blocker. A stale lock versus active backup requires diagnosis in My UNA World, not manual SQL import.
 
-Open **Motion backgrounds** to choose from fourteen original silent loops. Each thumbnail has a name; selecting it updates the live preview. The twelve new nature/abstract choices are illustrated animations, not stock footage. Upload video or GIF is available below the grid when enabled by the administrator. Playback still respects reduced-motion preferences and offers Play/Pause.
-
-Update an existing 0.3.0 installation with the native 0.3.0 → 0.3.1 updater in Studio. Existing posts, media and settings are preserved; twelve new background switches appear in module settings.
-
-### 0.3.2 corrective update
-
-0.3.2 fixes editor startup while larger pages are still loading. The tested native route on the authorized test site is0.3.0→0.3.1→0.3.2; do not distribute0.3.1alone. The0.3.1→0.3.2 updater changes files and clears caches only. A direct0.3.0→0.3.2 updater and fresh0.3.2installation still require separate validation before wider release.
+Native lifecycle validation passed on the authorized UNA 15/PHP 8.3/MariaDB test environment using its normal SQL mode. Forcing strict SQL mode exposed a UNA core `sys_alerts_handlers.ts` default-value error during enable; strict-mode enable is not certified. No core changes or live SQL-mode changes were made.
