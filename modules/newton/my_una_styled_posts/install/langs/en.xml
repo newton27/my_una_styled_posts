@@ -93,4 +93,16 @@
   <string name="_nw_styled_posts_option_font_arabic_modern"><![CDATA[Font: Arabic Modern · عربي]]></string>
   <string name="_nw_styled_posts_option_font_rounded"><![CDATA[Font: Friendly]]></string>
   <string name="_nw_styled_posts_option_font_book"><![CDATA[Font: Book]]></string>
+  <string name="_nw_styled_posts_option_background_motion_gradients"><![CDATA[Background: Flowing gradients]]></string>
+  <string name="_nw_styled_posts_option_background_motion_waves"><![CDATA[Background: Ocean waves]]></string>
+  <string name="_nw_styled_posts_option_background_motion_clouds"><![CDATA[Background: Drifting clouds]]></string>
+  <string name="_nw_styled_posts_option_background_motion_rain"><![CDATA[Background: Rain]]></string>
+  <string name="_nw_styled_posts_option_background_motion_snow"><![CDATA[Background: Snowfall]]></string>
+  <string name="_nw_styled_posts_option_background_motion_particles"><![CDATA[Background: Floating particles]]></string>
+  <string name="_nw_styled_posts_option_background_motion_bokeh"><![CDATA[Background: Bokeh lights]]></string>
+  <string name="_nw_styled_posts_option_background_motion_northern"><![CDATA[Background: Northern lights]]></string>
+  <string name="_nw_styled_posts_option_background_motion_ripples"><![CDATA[Background: Rippling water]]></string>
+  <string name="_nw_styled_posts_option_background_motion_smoke"><![CDATA[Background: Soft smoke]]></string>
+  <string name="_nw_styled_posts_option_background_motion_stars"><![CDATA[Background: Shimmering stars]]></string>
+  <string name="_nw_styled_posts_option_background_motion_ribbons"><![CDATA[Background: Abstract ribbons]]></string>
 </resources>

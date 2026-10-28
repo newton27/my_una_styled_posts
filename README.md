@@ -1,3 +1,5 @@
+> **0.3.1 motion library candidate:** twelve new original illustrated loops (fourteen total), named thumbnail choices and a more prominent Motion backgrounds section. Native deployment validation is in progress on gayjaxonline.com. Wider release gates remain open.
+
 > **0.3.0 is installed and verified on gayjaxonline.com** through the native updater. This remains a test candidate pending clean-install, member-role and deferred motion-upload checks. See [native deployment evidence](docs/evidence/native-editor-update-2026-10-28.md). Existing RC packages remain immutable.
 
 > Motion backgrounds are being developed as **0.2.0** on `feature/motion-backgrounds`. This branch is a test candidate, not a released update. See [motion validation evidence](docs/evidence/motion-backgrounds-2026-10-27.md).

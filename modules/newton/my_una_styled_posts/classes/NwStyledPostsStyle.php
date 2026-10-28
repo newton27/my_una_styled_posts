@@ -36,6 +36,18 @@ class NwStyledPostsStyle
             'botanical' => ['label' => 'Botanical', 'kind' => 'picture', 'file' => 'botanical.svg', 'css' => 'none'],
             'motion_tides' => ['label' => 'Moving tides', 'kind' => 'motion', 'clip' => 'tides.mp4', 'poster' => 'tides.jpg', 'css' => 'linear-gradient(135deg,#145965,#257d8e)'],
             'motion_glow' => ['label' => 'Soft glow', 'kind' => 'motion', 'clip' => 'glow.mp4', 'poster' => 'glow.jpg', 'css' => 'linear-gradient(135deg,#56385b,#9d5275)'],
+            'motion_gradients' => ['label' => 'Flowing gradients', 'kind' => 'motion', 'clip' => 'gradients.mp4', 'poster' => 'gradients.jpg', 'css' => 'linear-gradient(#49346e,#49346e)'],
+            'motion_waves' => ['label' => 'Ocean waves', 'kind' => 'motion', 'clip' => 'waves.mp4', 'poster' => 'waves.jpg', 'css' => 'linear-gradient(#15455a,#15455a)'],
+            'motion_clouds' => ['label' => 'Drifting clouds', 'kind' => 'motion', 'clip' => 'clouds.mp4', 'poster' => 'clouds.jpg', 'css' => 'linear-gradient(#3d5578,#3d5578)'],
+            'motion_rain' => ['label' => 'Rain', 'kind' => 'motion', 'clip' => 'rain.mp4', 'poster' => 'rain.jpg', 'css' => 'linear-gradient(#1d2c40,#1d2c40)'],
+            'motion_snow' => ['label' => 'Snowfall', 'kind' => 'motion', 'clip' => 'snow.mp4', 'poster' => 'snow.jpg', 'css' => 'linear-gradient(#293b5c,#293b5c)'],
+            'motion_particles' => ['label' => 'Floating particles', 'kind' => 'motion', 'clip' => 'particles.mp4', 'poster' => 'particles.jpg', 'css' => 'linear-gradient(#342b60,#342b60)'],
+            'motion_bokeh' => ['label' => 'Bokeh lights', 'kind' => 'motion', 'clip' => 'bokeh.mp4', 'poster' => 'bokeh.jpg', 'css' => 'linear-gradient(#51304e,#51304e)'],
+            'motion_northern' => ['label' => 'Northern lights', 'kind' => 'motion', 'clip' => 'northern.mp4', 'poster' => 'northern.jpg', 'css' => 'linear-gradient(#16394d,#16394d)'],
+            'motion_ripples' => ['label' => 'Rippling water', 'kind' => 'motion', 'clip' => 'ripples.mp4', 'poster' => 'ripples.jpg', 'css' => 'linear-gradient(#16515a,#16515a)'],
+            'motion_smoke' => ['label' => 'Soft smoke', 'kind' => 'motion', 'clip' => 'smoke.mp4', 'poster' => 'smoke.jpg', 'css' => 'linear-gradient(#3d3053,#3d3053)'],
+            'motion_stars' => ['label' => 'Shimmering stars', 'kind' => 'motion', 'clip' => 'stars.mp4', 'poster' => 'stars.jpg', 'css' => 'linear-gradient(#17213c,#17213c)'],
+            'motion_ribbons' => ['label' => 'Abstract ribbons', 'kind' => 'motion', 'clip' => 'ribbons.mp4', 'poster' => 'ribbons.jpg', 'css' => 'linear-gradient(#522c60,#522c60)'],
         ];
         foreach ($fonts as $id => &$item) $item['enabled'] = !function_exists('getParam') || getParam('nw_styled_posts_font_'.$id) === 'on';
         unset($item);

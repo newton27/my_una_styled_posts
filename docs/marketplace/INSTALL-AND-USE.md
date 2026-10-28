@@ -43,3 +43,9 @@ Use at most 32 font entries, each with a unique lowercase ID (letter first, then
 ### Upgrade route
 
 Sites on 0.1.0 must first apply the existing 0.1.0-to-0.2.0 updater, then the 0.2.0-to-0.3.0 updater. Do not copy 0.3.0 source into an updater labelled 0.2.0. Existing immutable 0.2.0 ZIPs remain unchanged. Native 0.3.0 validation and motion upload testing are release gates; a prepared package is not evidence of a completed site update.
+
+## 0.3.1 motion library
+
+Open **Motion backgrounds** to choose from fourteen original silent loops. Each thumbnail has a name; selecting it updates the live preview. The twelve new nature/abstract choices are illustrated animations, not stock footage. Upload video or GIF is available below the grid when enabled by the administrator. Playback still respects reduced-motion preferences and offers Play/Pause.
+
+Update an existing 0.3.0 installation with the native 0.3.0 → 0.3.1 updater in Studio. Existing posts, media and settings are preserved; twelve new background switches appear in module settings.

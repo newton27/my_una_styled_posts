@@ -5,7 +5,7 @@ const {chromium}=require(require.resolve('playwright',{paths:[process.env.CODEX_
  const page=await browser.newPage({viewport:{width:1000,height:1100},reducedMotion:'reduce'});const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(process.env.MOTION_PREVIEW_URL||'http://127.0.0.1:8934/preview/index.html');
  await page.locator('.nwsp-motion-choices summary').click();
- assert.equal(await page.locator('[aria-label="Motion backgrounds"] [data-background]').count(),2);
+ assert.equal(await page.locator('[aria-label="Motion backgrounds"] [data-background]').count(),14);
  await page.locator('[data-background=motion_tides]').click();
  assert.equal(await page.locator('[name=background]').inputValue(),'motion_tides');
  const video=page.locator('video.nwsp-motion');await video.scrollIntoViewIfNeeded();

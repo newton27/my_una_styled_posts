@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources name="en" flag="gb" title="English">
+ <string_add name="_nw_styled_posts_option_background_motion_gradients"><![CDATA[Background: Flowing gradients]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_waves"><![CDATA[Background: Ocean waves]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_clouds"><![CDATA[Background: Drifting clouds]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_rain"><![CDATA[Background: Rain]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_snow"><![CDATA[Background: Snowfall]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_particles"><![CDATA[Background: Floating particles]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_bokeh"><![CDATA[Background: Bokeh lights]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_northern"><![CDATA[Background: Northern lights]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_ripples"><![CDATA[Background: Rippling water]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_smoke"><![CDATA[Background: Soft smoke]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_stars"><![CDATA[Background: Shimmering stars]]></string_add>
+ <string_add name="_nw_styled_posts_option_background_motion_ribbons"><![CDATA[Background: Abstract ribbons]]></string_add>
+</resources>

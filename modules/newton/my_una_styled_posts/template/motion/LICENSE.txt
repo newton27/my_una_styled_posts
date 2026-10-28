@@ -7,3 +7,5 @@ terms. No third-party footage, music or stock imagery is included.
 
 Reproducible source: scripts/create_motion_assets.py (NumPy + FFmpeg).
 Each loop is 4 seconds, 640 x 480, 20 fps, silent H.264 MP4.
+
+The twelve additional illustrated loops (gradients, waves, clouds, rain, snow, particles, bokeh, northern, ripples, smoke, stars, ribbons) are original procedural artwork by My UNA World, generated with scripts/create_motion_library.py. Copyright 2026 My UNA World. Same MIT terms apply. No third-party stock footage.
