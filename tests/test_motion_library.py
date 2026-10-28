@@ -5,10 +5,13 @@ MODULE=ROOT/'modules/newton/my_una_styled_posts'
 NAMES=['gradients','waves','clouds','rain','snow','particles','bokeh','northern','ripples','smoke','stars','ribbons']
 
 class MotionLibrary(unittest.TestCase):
+ def test_startup_repair_update_is_file_only(self):
+  cfg=(ROOT/'updates/update_0.3.1_0.3.2/install/config.php').read_text()
+  for v in ["'version_from' => '0.3.1'","'version_to' => '0.3.2'","'execute_sql' => 0","'update_languages' => 0","'update_files' => 1"]:self.assertIn(v,cfg)
  def test_shipped_preview_has_current_motion_library(self):
   html=(ROOT/'preview/index.html').read_text()
   self.assertEqual(html.count('class="nwsp-motion-choice"'),14)
-  self.assertIn('STYLED POSTS · 0.3.1',html)
+  self.assertIn('STYLED POSTS · 0.3.2',html)
  def test_media_format_and_seam(self):
   import numpy as np
   import importlib.util
@@ -28,7 +31,7 @@ class MotionLibrary(unittest.TestCase):
   u=ROOT/'updates/update_0.3.0_0.3.1/install'
   cfg=(u/'config.php').read_text()
   self.assertIn("'version_from' => '0.3.0'",cfg);self.assertIn("'version_to' => '0.3.1'",cfg)
-  self.assertIn("'version' => '0.3.1'",(MODULE/'install/config.php').read_text())
+  self.assertIn("'version' => '0.3.2'",(MODULE/'install/config.php').read_text())
   xml=ET.parse(u/'langs/en.xml').getroot();self.assertFalse(xml.findall('string'))
   keys={e.attrib['name'] for e in xml.findall('string_add')}
   sql=(u/'sql/install.sql').read_text()

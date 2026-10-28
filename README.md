@@ -1,14 +1,10 @@
-> **0.3.1 motion library candidate:** twelve new original illustrated loops (fourteen total), named thumbnail choices and a more prominent Motion backgrounds section. Native deployment validation is in progress on gayjaxonline.com. Wider release gates remain open.
-
-> **0.3.0 is installed and verified on gayjaxonline.com** through the native updater. This remains a test candidate pending clean-install, member-role and deferred motion-upload checks. See [native deployment evidence](docs/evidence/native-editor-update-2026-10-28.md). Existing RC packages remain immutable.
-
-> Motion backgrounds are being developed as **0.2.0** on `feature/motion-backgrounds`. This branch is a test candidate, not a released update. See [motion validation evidence](docs/evidence/motion-backgrounds-2026-10-27.md).
+> **0.3.2 motion library candidate:** twelve new original illustrated loops (fourteen total), named thumbnail choices and a more prominent Motion backgrounds section. Native deployment validation is in progress on gayjaxonline.com. Wider release gates remain open.
 
 # My UNA Styled Posts
 
-Development candidate **0.3.0**, targeting UNA 15 / PHP 8.3. The native 0.1.0→0.2.0 update has been exercised on gayjaxonline.com with a corrected language step; see the motion update evidence. The composer/photo picker have been exercised on myunaworld.com; clean native installation and disable/re-enable preservation have passed on gayjaxonline.com. Authenticated admin comment/live-count and reaction add/change/remove cycles have also passed. Standard-member/non-owner, upload lifecycle, repost and uninstall/reinstall validation remain open. This package does not change UNA core files.
+Development candidate **0.3.2**, targeting UNA15 / PHP8.3. Current deployment validation is limited to gayjaxonline.com. Clean installation, member-role coverage and the deferred video/GIF upload lifecycle remain wider-release gates. This module does not change UNA core files.
 
-Members can create editable text cards with five font styles, text size/color/alignment, ten still backgrounds, two original four-second motion loops, a custom solid color, an uploaded photo, or a photo selected from the current profile’s native UNA Photos library. A live preview adapts the card to the available width. Posts use native UNA privacy, comments, reactions and repost services.
+Members can create editable text cards with nine built-in font choices, text size/color/alignment, ten still backgrounds and fourteen original four-second motion loops. Backgrounds may also use an uploaded photo or a photo selected from the member's native UNA Photos library. Text backdrops, image position/zoom and text direction help keep quotes readable. The live preview adapts to the available width; posts use native UNA privacy, comments, reactions and repost services.
 
 ## Preview
 

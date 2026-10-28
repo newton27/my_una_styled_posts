@@ -83,15 +83,20 @@
         return overflow;
     }
     function mount(root) {
-        if (mounted.has(root)) return;
+        // Native pages may stream the section before its trailing JSON and form fields.
+        if (document.readyState === 'loading' || mounted.has(root)) return;
         const form = root.closest('form');
         if (!form) return;
         const source = form.querySelector('[name="text"]');
         if (!source) return;
-        mounted.add(root);
-        const config = JSON.parse(root.querySelector('.nwsp-config').textContent);
+        const configElement = root.querySelector('.nwsp-config');
+        if (!configElement || !configElement.textContent.trim()) return;
+        let config;
+        try { config = JSON.parse(configElement.textContent); } catch (_) { return; }
         const state = { ...config.values };
         const card = root.querySelector('.nwsp-card');
+        if (!card) return;
+        mounted.add(root);
         const quote = card.querySelector('.nwsp-text-content') || card.querySelector('.nwsp-text');
         const fileInput = form.querySelector('[name="background_upload"]');
         const remove = form.querySelector('[name="remove_background"]');
@@ -291,7 +296,10 @@
     let queued = false;
     new MutationObserver(records => {
         records.forEach(r=>r.removedNodes.forEach(n=>{if(n.nodeType!==1)return;if(n.matches('video.nwsp-motion') && !n.isConnected)stopMotion(n);n.querySelectorAll('video.nwsp-motion').forEach(v=>{if(!v.isConnected)stopMotion(v);});}));
-        if (queued || !records.some(r => [...r.addedNodes].some(n => n.nodeType === 1 && (n.matches('.nwsp-composer,.nwsp-card') || n.querySelector('.nwsp-composer,.nwsp-card'))))) return;
+        if (queued || !records.some(r => {
+            const pending = r.target.nodeType === 1 && r.target.closest('.nwsp-composer');
+            return (pending && !mounted.has(pending)) || [...r.addedNodes].some(n => n.nodeType === 1 && (n.matches('.nwsp-composer,.nwsp-card') || n.querySelector('.nwsp-composer,.nwsp-card')));
+        })) return;
         queued = true; requestAnimationFrame(() => { queued = false; scan(); });
     }).observe(document.documentElement, { childList: true, subtree: true });
 }());

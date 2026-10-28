@@ -44,7 +44,7 @@
 .nwsp-motion-subtitle{display:block;font-size:12px;font-weight:400;margin-top:5px;line-height:1.5}
 .nwsp-motion-chevron{font-size:24px;line-height:1}.nwsp-motion-choices[open] .nwsp-motion-chevron{transform:rotate(180deg)}
 .nwsp-motion-choices summary:focus-visible{outline:3px solid #8a69c4;outline-offset:4px;border-radius:8px}
-.nwsp-motion-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 18px}
+.nwsp-motion-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:12px;margin:12px 0 18px}
 .nwsp-motion-choice{display:block;width:100%;min-width:0;border:2px solid #bba3dd;border-radius:9px;padding:0;overflow:hidden;background:#292238;color:white;cursor:pointer;font:inherit;text-align:start;box-sizing:border-box}
 .nwsp-motion-thumb{display:flex;align-items:center;justify-content:center;width:100%;aspect-ratio:4/3;background-size:cover;background-position:center}
 .nwsp-motion-thumb>span{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:#17102299;color:white;font-size:11px}

@@ -4,8 +4,8 @@ import argparse, hashlib, json, re, subprocess, zipfile
 from pathlib import Path
 from package_update import write_member
 parser=argparse.ArgumentParser()
-parser.add_argument('--label',default='0.3.1-motion-rc1')
-parser.add_argument('--from-version',default='0.3.0')
+parser.add_argument('--label',default='0.3.2-motion-rc1')
+parser.add_argument('--from-version',default='0.3.1')
 args=parser.parse_args();label=args.label
 prior=args.from_version
 if not re.fullmatch(r'\d+\.\d+\.\d+',prior):raise SystemExit('Invalid prior version')

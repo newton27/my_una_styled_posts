@@ -4,7 +4,7 @@ ROOT=Path(__file__).resolve().parents[1]
 MODULE=ROOT/'modules/newton/my_una_styled_posts'
 class EditorUpdate(unittest.TestCase):
  def test_matching_native_identity(self):
-  self.assertIn("'version' => '0.3.1'",(MODULE/'install/config.php').read_text())
+  self.assertIn("'version' => '0.3.2'",(MODULE/'install/config.php').read_text())
   p=ROOT/'updates/update_0.2.0_0.3.0/install/config.php'
   self.assertTrue(p.is_file())
   s=p.read_text()

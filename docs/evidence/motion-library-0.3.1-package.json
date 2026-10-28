@@ -1,0 +1,17 @@
+{
+  "module": "nw_styled_posts",
+  "version": "0.3.1",
+  "status": "development candidate; native site validation pending",
+  "source_commit": "7c2d31d864e6e869b4865515344a83920d62afea",
+  "una_reference_commit": "05466c74ce6bbe4d8579fa901c6dc787d1dcff75",
+  "installer": "my-una-styled-posts-0.3.1-motion-rc1-install.zip",
+  "installer_bytes": 1363385,
+  "installer_sha256": "ba0d9a9d4c14e9fc95440713dfa927e3e3f7abdbf93b4478188bc75755b8fe93",
+  "updater": "my-una-styled-posts-0.3.1-motion-rc1-update-0.3.0-to-0.3.1.zip",
+  "updater_bytes": 1365482,
+  "updater_sha256": "e80462cbc9522d783792d2aaed732f643f2b8376a6d67066b906a79ac0394eba",
+  "remote_commit": "1391747194fc7b69d94a4e3b9fe693ec133ba3c6",
+  "source_tree": "cafc9fbe3020fd172c8a2e8b03c0452ed402754d",
+  "kit_sha256": "ac406ef20fcef830cddcc4617f00c057dfe9e20610b6657a44651627a6237926",
+  "kit_bytes": 4698037
+}

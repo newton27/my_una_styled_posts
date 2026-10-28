@@ -11,7 +11,12 @@ Fresh independent review found a stale static preview; regression reproduced RED
 Local Chromium download failed(truncated vendor archive); no local browser pass claimed. Cloud browser file URL policy disallows local preview; no workaround attempted. Live editor, native update and preservation checks pending at source freeze. Video/GIF upload conversion remains explicitly deferred.
 
 ## Rollback checkpoint
-Private server checkpoint /home/gayjaxonline/styled-posts-motion-library-20261028 contains full DB/module/media and JSON snapshots:3posts,26settings,49runtime files,2media files. Database17,458,543bytes,SHA25694285c084b540b120d292db542373f214b90e9d70815631db0b0967e1a5b6172. An initial diagnostic CLI command failed before snapshot completion; the successful checkpoint followed it. No core/runtime content was changed by that diagnostic.
+Private rollback records retained on the authorized server: full database/module/media checkpoint and JSON snapshots. Three posts,26settings,49runtime files and2media files captured before upgrade. Private filesystem locations and database-backup metadata are excluded from this repository summary. An initial diagnostic CLI command failed before snapshot completion; the successful checkpoint followed it, without changing runtime content.
 
 ## Scope
 Only gayjaxonline.com is authorized. No other site, core file, GitHub tag/release/asset, or Marketplace listing changed. Fresh native install, member-role matrix and upload-conversion lifecycle remain wider-release gates.
+
+## Native 0.3.1 result and corrective candidate
+Studio0.3.0→0.3.1 completed;73runtime hashes exact,all3preexistingrows/26settings/2media hashes unchanged,38settings and14enabledmotionchoices. New picker rendered, but real full-page create exposed streaming initialization race: MutationObserver mounted section before trailing JSON existed, throwing null.textContent and leaving it permanently marked mounted. No test post was saved during the failure.
+
+Corrective0.3.2 waits for document parsing and completeJSON/card before marking mounted, and retries child mutations on incomplete composers. NodeVM regression reproduced exacterror RED and then passed. New native0.3.1→0.3.2 updater is file/cacheonly (SQL/language/transcoderstepsdisabled). Fresh reviewer found no additional material concerns; real reload/selection/save/reopen remains mandatory. Responsive grid uses additional columns in wide create forms to avoid oversized thumbnails. Immutable0.3.1 packages retained.
