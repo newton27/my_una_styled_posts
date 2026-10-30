@@ -12,10 +12,7 @@ class NwStyledPostsCmts extends BxTemplCmts
     }
     function getCommentsBlockTitle()
     {
-        return _t($this->_aT['block_comments_title'], $this->getCounter([
-            'show_counter_only' => true,
-            'show_counter_empty' => true,
-        ]));
+        return _t($this->_aT['block_comments_title'], $this->getCommentsCountAll(0, true));
     }
     protected function _getCounterLabel($iCount, $aParams = [])
     {

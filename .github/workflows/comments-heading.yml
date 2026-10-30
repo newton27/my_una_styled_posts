@@ -1,0 +1,15 @@
+name: Comments heading regression
+on: [push, pull_request]
+jobs:
+  comments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: php -l modules/newton/my_una_styled_posts/classes/NwStyledPostsCmts.php
+      - run: php -l updates/update_0.3.2_0.3.3/install/config.php
+      - run: php tests/comments.php
+      - run: python3 scripts/build.py --label 0.3.3-comments-rc1 --from-version 0.3.2
+      - uses: actions/upload-artifact@v4
+        with:
+          name: styled-posts-0.3.3-candidate
+          path: artifacts/
