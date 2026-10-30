@@ -1,0 +1,10 @@
+name: Comments heading regression
+on: [push, pull_request]
+jobs:
+  comments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: php -l modules/newton/my_una_styled_posts/classes/NwStyledPostsCmts.php
+      - run: php -l updates/update_0.3.2_0.3.3/install/config.php
+      - run: php tests/comments.php

@@ -6,6 +6,11 @@ class BxTemplCmts {
     protected $_sTmplNameItem='comment.html';
     protected $_aT=['block_comments_title'=>'Comments ({0})'];
     public $received;
+    public $count = 0;
+    function getCommentsCountAll($parent = 0, $recalculate = false) {
+        if ($parent !== 0 || $recalculate !== true) throw new RuntimeException('Heading must recalculate the total');
+        return $this->count;
+    }
     function __construct($system,$id,$init=true,$template=false){$this->received=[$system,$id,$init,$template];}
     function itemTemplate(){return $this->_sTmplNameItem;}
     function getCounter($params=[]){return '<span class="native-comment-counter">'.$this->_getCounterLabel(1,$params).'</span>';}
@@ -24,5 +29,8 @@ foreach(['__header__','__content__','__actions__','__replies__','__author_unit__
 foreach(['__item_note__','__meta__','bx_if:show_pinned'] as $old)
     if(str_contains($html,$old))throw new RuntimeException('Header details belong to the native header renderer');
 if(!method_exists($c,'getCommentsBlockTitle'))throw new RuntimeException('Comment title must use the native live counter');
-if($c->getCommentsBlockTitle()!=='Comments (<span class="native-comment-counter">1</span>)')throw new RuntimeException('Preserve the native counter markup in the block title');
+foreach ([0, 1, 12] as $count) {
+    $c->count = $count;
+    if ($c->getCommentsBlockTitle() !== 'Comments ('.$count.')') throw new RuntimeException('Heading must contain a plain count without widget markup');
+}
 echo "12 comment adapter/layout assertions passed\n";
