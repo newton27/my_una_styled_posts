@@ -30,12 +30,14 @@ manifest=[]
 with zipfile.ZipFile(installer,'w',zipfile.ZIP_DEFLATED) as z:
     for p in sorted(module.rglob('*')):
         if not p.is_file() or p.relative_to(root).as_posix() not in tracked:continue
-        relative='newton/my_una_styled_posts/'+p.relative_to(module).as_posix()
+        relative='my_una_styled_posts/'+p.relative_to(module).as_posix()
         data=p.read_bytes();write_member(z,relative,data)
         manifest.append({'path':relative,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
 with zipfile.ZipFile(installer) as z:
     assert z.testzip() is None
-    assert 'newton/my_una_styled_posts/install/config.php' in z.namelist()
+    assert 'my_una_styled_posts/install/config.php' in z.namelist()
+    assert z.namelist()[0] == 'my_una_styled_posts/'
+    assert all(n.startswith('my_una_styled_posts/') for n in z.namelist())
 # Historical updater: update_0.2.0_0.3.0 remains immutable.
 update_name='update_'+prior+'_'+version
 update_root=root/'updates'/update_name
@@ -51,8 +53,10 @@ with zipfile.ZipFile(updater,'w',zipfile.ZIP_DEFLATED) as z:
 with zipfile.ZipFile(updater) as z:
     assert z.testzip() is None
     assert update_name+'/install/config.php' in z.namelist()
+    assert z.namelist()[0] == update_name+'/'
+    assert all(n.startswith(update_name+'/') for n in z.namelist())
     for item in manifest:
-        suffix=item['path'].removeprefix('newton/my_una_styled_posts/')
+        suffix=item['path'].removeprefix('my_una_styled_posts/')
         assert hashlib.sha256(z.read(update_name+'/source/'+suffix)).hexdigest()==item['sha256']
 report={'module':'nw_styled_posts','version':version,'status':'development candidate; native site validation pending','source_commit':revision,'una_reference_commit':'05466c74ce6bbe4d8579fa901c6dc787d1dcff75','installer':installer.name,'installer_bytes':installer.stat().st_size,'installer_sha256':hashlib.sha256(installer.read_bytes()).hexdigest(),'updater':updater.name,'updater_bytes':updater.stat().st_size,'updater_sha256':hashlib.sha256(updater.read_bytes()).hexdigest(),'files':manifest}
 manifest_path.write_text(json.dumps(report,indent=2)+'\n')
