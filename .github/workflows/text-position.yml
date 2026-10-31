@@ -1,0 +1,20 @@
+name: Text positioning candidate
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: php tests/text-position.php
+      - run: sh scripts/check.sh
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - run: php tests/preview.php > preview/index.html
+      - run: node tests/text-position.cjs
+        env:
+          CODEX_PRIMARY_RUNTIME_NODE_MODULES: ./node_modules
+      - run: python3 scripts/build.py --label 0.3.4-position-rc1 --from-version 0.3.3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: styled-posts-0.3.4-candidate
+          path: artifacts/
