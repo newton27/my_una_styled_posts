@@ -20,3 +20,9 @@ img.nwsp-background{object-position:var(--nwsp-image-x,50%) var(--nwsp-image-y,5
 
 @font-face{font-family:'NW Amiri';src:url('../fonts/Amiri-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 .nwsp-text:dir(rtl){line-height:1.5}
+
+/* Custom positions use available travel space, preserving natural card height. */
+.nwsp-card[data-text-position="custom"] .nwsp-text{width:max-content;max-width:100%;transform:translate(var(--nwsp-text-dx,0px),var(--nwsp-text-dy,0px))}
+.nwsp-composer .nwsp-text{cursor:grab;touch-action:none;user-select:none}
+.nwsp-composer .nwsp-text.nwsp-dragging{cursor:grabbing}
+.nwsp-composer .nwsp-text:focus-visible{outline:2px dashed currentColor;outline-offset:4px}

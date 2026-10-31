@@ -1,0 +1,27 @@
+name: Text positioning candidate
+on: [push, pull_request]
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: php tests/text-position.php
+      - run: python3 -m pip install numpy Pillow
+      - run: sh scripts/check.sh
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - run: php tests/preview.php > preview/index.html
+      - run: node tests/text-position.cjs
+        env:
+          CODEX_PRIMARY_RUNTIME_NODE_MODULES: ./node_modules
+      - run: git restore preview/index.html
+      - run: python3 scripts/build.py --label 0.3.4-position-rc1 --from-version 0.3.3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: styled-posts-0.3.4-candidate
+          path: artifacts/

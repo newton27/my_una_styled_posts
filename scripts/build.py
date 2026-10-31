@@ -4,8 +4,8 @@ import argparse, hashlib, json, re, subprocess, zipfile
 from pathlib import Path
 from package_update import write_member
 parser=argparse.ArgumentParser()
-parser.add_argument('--label',default='0.3.3-comments-rc1')
-parser.add_argument('--from-version',default='0.3.2')
+parser.add_argument('--label',default='0.3.4-position-rc1')
+parser.add_argument('--from-version',default='0.3.3')
 args=parser.parse_args();label=args.label
 prior=args.from_version
 if not re.fullmatch(r'\d+\.\d+\.\d+',prior):raise SystemExit('Invalid prior version')
@@ -70,3 +70,4 @@ with zipfile.ZipFile(kit,'w',zipfile.ZIP_DEFLATED) as z:
     write_member(z,'START-HERE.txt','My UNA Styled Posts ' +version+ ' — development kit\n\nOpen source/preview/index.html for the working editor preview.\nRead source/README.md before testing the native installer.\nSee source/docs/evidence/release-readiness-2026-10-26.md for live evidence and remaining release gates.\nThis kit is a release candidate preparation, not a final certified release.\n')
 with zipfile.ZipFile(kit) as z:assert z.testzip() is None
 print(json.dumps({'source_commit':revision,'installer':str(installer),'installer_files':len(manifest),'updater':str(updater),'development_kit':str(kit),'kit_bytes':kit.stat().st_size,'kit_sha256':hashlib.sha256(kit.read_bytes()).hexdigest()},indent=2))
+

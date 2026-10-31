@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources name="en" flag="gb" title="English">
+<string_add name="_nw_styled_posts_field_text_position"><![CDATA[Text position]]></string_add>
+<string_add name="_nw_styled_posts_field_text_x"><![CDATA[Text horizontal position]]></string_add>
+<string_add name="_nw_styled_posts_field_text_y"><![CDATA[Text vertical position]]></string_add>
+</resources>

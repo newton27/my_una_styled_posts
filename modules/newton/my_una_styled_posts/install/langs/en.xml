@@ -105,4 +105,7 @@
   <string name="_nw_styled_posts_option_background_motion_smoke"><![CDATA[Background: Soft smoke]]></string>
   <string name="_nw_styled_posts_option_background_motion_stars"><![CDATA[Background: Shimmering stars]]></string>
   <string name="_nw_styled_posts_option_background_motion_ribbons"><![CDATA[Background: Abstract ribbons]]></string>
+<string name="_nw_styled_posts_field_text_position"><![CDATA[Text position]]></string>
+<string name="_nw_styled_posts_field_text_x"><![CDATA[Text horizontal position]]></string>
+<string name="_nw_styled_posts_field_text_y"><![CDATA[Text vertical position]]></string>
 </resources>

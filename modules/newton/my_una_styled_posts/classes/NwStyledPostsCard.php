@@ -22,6 +22,6 @@ class NwStyledPostsCard
         $font=$catalog['fonts'][$s['font_name']];
         $face='';
         if (!empty($font['custom']) && defined('BX_DOL_URL_ROOT')) $face='<style>@font-face{font-family:NWCustom_'.substr($s['font_name'],7).';src:url("'.$e(BX_DOL_URL_ROOT.'modules/?r=styled_posts/font/'.substr($s['font_name'],7)).'") format("woff2");font-display:swap}</style>';
-        return $face.'<article class="nwsp-card" data-font-size="'.$s['font_size'].'" style="'.$e($css).'">'.$media.'<div class="nwsp-text" dir="'.$s['text_direction'].'"><span class="nwsp-text-content">'.$e(is_string($post['text']??null)?$post['text']:'').'</span></div></article>';
+        return $face.'<article class="nwsp-card" data-font-size="'.$s['font_size'].'" data-text-position="'.$s['text_position'].'" data-text-x="'.$s['text_x'].'" data-text-y="'.$s['text_y'].'" style="'.$e($css).'">'.$media.'<div class="nwsp-text" dir="'.$s['text_direction'].'"><span class="nwsp-text-content">'.$e(is_string($post['text']??null)?$post['text']:'').'</span></div></article>';
     }
 }
