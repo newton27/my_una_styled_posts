@@ -20,15 +20,17 @@
 - Existing left/right alignment remains unchanged until deliberately repositioned.
 
 ### Task 1: Saved position contract and migration
-- [ ] Write PHP tests for defaults, invalid coordinates/mode, rendered mode and persistence through native form.
-- [ ] Verify failure, implement Style/Card/schema/form registrations and 0.3.3→0.3.4 updater.
-- [ ] Run PHP suite and package contract checks.
+- [x] Write PHP tests for defaults, invalid coordinates/mode, rendered mode and persistence through native form.
+- [x] Verify failure, implement Style/Card/schema/form registrations and 0.3.3→0.3.4 updater.
+- [x] Run PHP suite and package contract checks.
 
 ### Task 2: Editor positioning
-- [ ] Write real browser tests for drag, bounds, reset, keyboard, cancel, touch, resize and saved render.
-- [ ] Verify missing-feature failure, implement pointer interactions and shared card layout.
-- [ ] Run existing editor browser regressions and new tests.
+- [x] Write real browser tests for drag, bounds, reset, keyboard, cancel, touch, resize and saved render.
+- [x] Verify missing-feature failure, implement pointer interactions and shared card layout.
+- [x] Run existing editor browser regressions and new tests.
 
 ### Task 3: Candidate
-- [ ] Review changes, run full checks in CI, package exact source with hashes.
-- [ ] Open draft PR and record native acceptance pending; do not publish untested package.
+- [x] Review changes, run full checks in CI, package exact source with hashes.
+- [x] Open draft PR and record native acceptance pending; do not publish untested package.
+
+Execution evidence: docs/evidence/text-position-0.3.4.md. Native updater additionally validated on gayjax.life. No standalone installer certification or Marketplace publication.

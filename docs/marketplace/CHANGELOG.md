@@ -1,3 +1,9 @@
+# 0.3.4
+
+- Drag post text in the editor preview with a mouse or touch; saved positions adapt to the card size.
+- Arrow-key positioning, larger Shift steps and Reset position. Existing posts retain their original layout.
+- Includes the 0.3.3 comments heading fix. Native updater path: 0.3.3 → 0.3.4.
+
 # 0.1.0 RC4 preparation
 
 Standalone editable Styled Posts with five fonts, ten backgrounds, a native Photos picker, independent private background copies, native privacy and Timeline integration.
