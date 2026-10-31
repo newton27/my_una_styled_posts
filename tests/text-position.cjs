@@ -1,16 +1,22 @@
 const assert=require('node:assert/strict');
-const {pathToFileURL}=require('node:url');
+const http=require('node:http'),fs=require('node:fs');
 const path=require('node:path');
 const {chromium}=require(require.resolve('playwright',{paths:[process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||path.resolve('node_modules')]}));
 (async()=>{
  const watchdog=setTimeout(()=>{console.error('Text positioning test exceeded 60 seconds');process.exit(1)},60000);
+ const server=http.createServer((req,res)=>{
+  const file=path.resolve('.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname));
+  if(!file.startsWith(process.cwd()+path.sep)){res.writeHead(403).end();return;}
+  try{const body=fs.readFileSync(file);res.setHeader('Content-Type',file.endsWith('.css')?'text/css':file.endsWith('.js')?'text/javascript':file.endsWith('.ttf')?'font/ttf':'text/html');res.end(body);}catch(_){res.writeHead(404).end();}
+ });
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  console.log('Launching browser');
  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_EXECUTABLE_PATH,args:['--no-sandbox']});
  console.log('Browser launched');
  const context=await browser.newContext({viewport:{width:1280,height:1000},hasTouch:true});
  const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
  console.log('Opening preview');
- await page.goto(pathToFileURL(path.resolve('preview/index.html')).href);await page.evaluate(()=>document.fonts.ready);
+ await page.goto('http://127.0.0.1:'+server.address().port+'/preview/index.html');await page.evaluate(()=>document.fonts.ready);
  console.log('Preview ready');
  const card=page.locator('.nwsp-composer .nwsp-card'),text=card.locator('.nwsp-text');
  await page.locator('[name=text]').fill('Move me');
@@ -58,5 +64,5 @@ const {chromium}=require(require.resolve('playwright',{paths:[process.env.CODEX_
  await page.locator('[name=text]').fill(('Line\n').repeat(95));await page.waitForTimeout(100);await contained();
  assert.deepEqual(errors,[]);
  await page.locator('[name=text]').fill('Your words.\nYour place.');await page.locator('[data-control=font_name]').selectOption('modern');await page.locator('[data-control=text_direction]').selectOption('auto');await text.focus();await page.keyboard.press('Shift+ArrowUp');await page.screenshot({path:'preview/text-position.png',fullPage:true});
- await browser.close();clearTimeout(watchdog);console.log('Text positioning browser checks PASS: mouse, touch, bounds, reset, keyboard, cancellation, saved card, mobile, Arabic and long text.');
+ await browser.close();server.close();clearTimeout(watchdog);console.log('Text positioning browser checks PASS: mouse, touch, bounds, reset, keyboard, cancellation, saved card, mobile, Arabic and long text.');
 })().catch(e=>{console.error(e);process.exit(1)});
