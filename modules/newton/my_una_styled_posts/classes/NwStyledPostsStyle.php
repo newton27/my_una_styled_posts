@@ -2,8 +2,8 @@
 /** Shared allowlist for the editor, server validation and saved-card rendering. */
 class NwStyledPostsStyle
 {
-    const FIELDS = ['font_name','font_size','text_color','text_align','background','background_color','text_backdrop','backdrop_color','backdrop_opacity','backdrop_padding','image_x','image_y','image_zoom','text_direction'];
-    const EXTRA_DEFAULTS = ['text_backdrop'=>'none','backdrop_color'=>'#000000','backdrop_opacity'=>65,'backdrop_padding'=>12,'image_x'=>50,'image_y'=>50,'image_zoom'=>100,'text_direction'=>'auto'];
+    const FIELDS = ['font_name','font_size','text_color','text_align','background','background_color','text_backdrop','backdrop_color','backdrop_opacity','backdrop_padding','image_x','image_y','image_zoom','text_direction','text_position','text_x','text_y'];
+    const EXTRA_DEFAULTS = ['text_backdrop'=>'none','backdrop_color'=>'#000000','backdrop_opacity'=>65,'backdrop_padding'=>12,'image_x'=>50,'image_y'=>50,'image_zoom'=>100,'text_direction'=>'auto','text_position'=>'auto','text_x'=>50,'text_y'=>50];
     const MAX_TEXT = 500;
     const MIN_SIZE = 18;
     const MAX_SIZE = 96;
@@ -73,8 +73,8 @@ class NwStyledPostsStyle
             $out[$key] = strtoupper($out[$key]);
         }
         if (!is_string($out['text_align']) || !in_array($out['text_align'],['left','center','right'],true)) throw new InvalidArgumentException('Choose left, center or right alignment.');
-        foreach (['text_backdrop'=>['none','box'],'text_direction'=>['auto','ltr','rtl']] as $key=>$allowed) if (!is_string($out[$key]) || !in_array($out[$key],$allowed,true)) throw new InvalidArgumentException('Choose a valid '.$key.'.');
-        foreach (['backdrop_opacity'=>[0,100],'backdrop_padding'=>[0,32],'image_x'=>[0,100],'image_y'=>[0,100],'image_zoom'=>[100,250]] as $key=>[$min,$max]) {
+        foreach (['text_backdrop'=>['none','box'],'text_direction'=>['auto','ltr','rtl'],'text_position'=>['auto','custom']] as $key=>$allowed) if (!is_string($out[$key]) || !in_array($out[$key],$allowed,true)) throw new InvalidArgumentException('Choose a valid '.$key.'.');
+        foreach (['backdrop_opacity'=>[0,100],'backdrop_padding'=>[0,32],'image_x'=>[0,100],'image_y'=>[0,100],'image_zoom'=>[100,250],'text_x'=>[0,100],'text_y'=>[0,100]] as $key=>[$min,$max]) {
             $v=$out[$key];
             if ((!is_int($v) && (!is_string($v) || !preg_match('/^\d{1,3}$/D',$v))) || (int)$v<$min || (int)$v>$max) throw new InvalidArgumentException('Choose '.$key.' between '.$min.' and '.$max.'.');
             $out[$key]=(int)$v;

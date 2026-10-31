@@ -8,7 +8,7 @@ MODULE = ROOT / 'modules/newton/my_una_styled_posts'
 class PackageContract(unittest.TestCase):
     def test_native_identity(self):
         config = (MODULE / 'install/config.php').read_text()
-        for value in ["'nw_styled_posts'", "'0.3.2'", "'newton/my_una_styled_posts/'", "'NwStyledPosts'"]:
+        for value in ["'nw_styled_posts'", "'0.3.4'", "'newton/my_una_styled_posts/'", "'NwStyledPosts'"]:
             self.assertIn(value, config)
 
     def test_native_files_exist(self):
@@ -41,3 +41,4 @@ class PackageContract(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

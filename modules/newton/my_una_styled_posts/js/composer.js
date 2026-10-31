@@ -62,6 +62,17 @@
         motionPlayers.set(video,()=>{disposed=true;clearTimeout(timer);request?.abort();observer.disconnect();button.removeEventListener('click',toggle);preference.removeEventListener('change',changed);document.removeEventListener('visibilitychange',visibility);video.removeEventListener('play',label);video.removeEventListener('pause',label);video.pause();video.removeAttribute('src');video.load();});
         display();if (descriptor.state==='pending') timer=setTimeout(poll,5000);
     }
+    function positionCard(card) {
+        const text = card.querySelector('.nwsp-text');
+        if (!text) return;
+        const css = getComputedStyle(card);
+        const roomX = Math.max(0, card.clientWidth - parseFloat(css.paddingLeft) - parseFloat(css.paddingRight) - text.offsetWidth);
+        const roomY = Math.max(0, card.clientHeight - parseFloat(css.paddingTop) - parseFloat(css.paddingBottom) - text.offsetHeight);
+        const percent = v => Number.isFinite(Number(v)) ? Math.max(0, Math.min(100, Number(v))) : 50;
+        const custom = card.dataset.textPosition === 'custom';
+        text.style.setProperty('--nwsp-text-dx', (custom ? roomX * (percent(card.dataset.textX) / 100 - 0.5) : 0) + 'px');
+        text.style.setProperty('--nwsp-text-dy', (custom ? roomY * (percent(card.dataset.textY) / 100 - 0.5) : 0) + 'px');
+    }
     function fitCard(card) {
         const text = card.querySelector('.nwsp-text');
         if (!text || !card.isConnected) return false;
@@ -80,6 +91,7 @@
         const overflow = text.scrollHeight > room + 1;
         // All text remains visible even when 500 large glyphs cannot fit a fixed card.
         card.classList.toggle('nwsp-overflow', overflow);
+        positionCard(card);
         return overflow;
     }
     function mount(root) {
@@ -93,7 +105,7 @@
         if (!configElement || !configElement.textContent.trim()) return;
         let config;
         try { config = JSON.parse(configElement.textContent); } catch (_) { return; }
-        const state = { ...config.values };
+        const state = { text_position:'auto', text_x:50, text_y:50, ...config.values };
         const card = root.querySelector('.nwsp-card');
         if (!card) return;
         mounted.add(root);
@@ -130,6 +142,9 @@
             card.style.fontFamily = config.catalog.fonts[state.font_name].family;
             card.style.textAlign = state.text_align;
             card.dataset.fontSize = state.font_size;
+            card.dataset.textPosition = state.text_position;
+            card.dataset.textX = state.text_x;
+            card.dataset.textY = state.text_y;
             for (const [key, value] of Object.entries(state)) syncField(key, value);
             root.querySelector('[data-size-label]').textContent = state.font_size;
             root.querySelector('[data-count]').textContent = Array.from(source.value).length + ' / 500';
@@ -167,6 +182,75 @@
             if (fileInput && !fileInput.validity.valid) message=fileInput.validationMessage;
             root.querySelector('[data-feedback]').textContent = message;
         }
+        const movable = card.querySelector('.nwsp-text');
+        movable.tabIndex = 0;
+        movable.setAttribute('role', 'group');
+        movable.setAttribute('aria-label', 'Move post text. Use arrow keys to position; Shift for larger steps.');
+        let drag = null;
+        const coordinates = () => {
+            const bounds = card.getBoundingClientRect(), box = movable.getBoundingClientRect(), css = getComputedStyle(card);
+            const left = bounds.left + card.clientLeft + parseFloat(css.paddingLeft);
+            const top = bounds.top + card.clientTop + parseFloat(css.paddingTop);
+            const roomX = Math.max(0, card.clientWidth - parseFloat(css.paddingLeft) - parseFloat(css.paddingRight) - box.width);
+            const roomY = Math.max(0, card.clientHeight - parseFloat(css.paddingTop) - parseFloat(css.paddingBottom) - box.height);
+            return {box, left, top, roomX, roomY};
+        };
+        const boundedPercent = (value, room) => room > 0 ? Math.round(Math.max(0, Math.min(100, value / room * 100))) : 50;
+        function customPosition() {
+            if (state.text_position === 'custom') return;
+            // Measure the existing content before switching out of the legacy full-width layout.
+            const content = quote.getBoundingClientRect(), bounds = card.getBoundingClientRect(), css = getComputedStyle(card);
+            const centerX = content.left + content.width / 2, centerY = content.top + content.height / 2;
+            state.text_position = 'custom';
+            update();
+            const c = coordinates();
+            state.text_x = boundedPercent(centerX - c.left - c.box.width / 2, c.roomX);
+            state.text_y = boundedPercent(centerY - c.top - c.box.height / 2, c.roomY);
+            update();
+        }
+        movable.addEventListener('pointerdown', e => {
+            if (!e.isPrimary || e.button !== 0 || drag) return;
+            const original = {text_position:state.text_position, text_x:state.text_x, text_y:state.text_y};
+            customPosition();
+            const box = movable.getBoundingClientRect();
+            drag = {id:e.pointerId, original, offsetX:e.clientX-box.left, offsetY:e.clientY-box.top};
+            movable.setPointerCapture(e.pointerId);
+            movable.classList.add('nwsp-dragging');
+            movable.focus({preventScroll:true});
+            e.preventDefault();
+        });
+        movable.addEventListener('pointermove', e => {
+            if (!drag || e.pointerId !== drag.id) return;
+            const c = coordinates();
+            state.text_x = boundedPercent(e.clientX - drag.offsetX - c.left, c.roomX);
+            state.text_y = boundedPercent(e.clientY - drag.offsetY - c.top, c.roomY);
+            update();
+            e.preventDefault();
+        });
+        function finishDrag(e, cancel) {
+            if (!drag || e.pointerId !== drag.id) return;
+            const current = drag;
+            drag = null;
+            if (cancel) {Object.assign(state, current.original); update();}
+            movable.classList.remove('nwsp-dragging');
+            if (movable.hasPointerCapture(e.pointerId)) movable.releasePointerCapture(e.pointerId);
+        }
+        movable.addEventListener('pointerup', e => finishDrag(e, false));
+        movable.addEventListener('pointercancel', e => finishDrag(e, true));
+        movable.addEventListener('lostpointercapture', e => finishDrag(e, false));
+        movable.addEventListener('keydown', e => {
+            const directions = {ArrowLeft:[-1,0], ArrowRight:[1,0], ArrowUp:[0,-1], ArrowDown:[0,1]};
+            if (!directions[e.key]) return;
+            e.preventDefault();
+            customPosition();
+            const [x,y] = directions[e.key], step = e.shiftKey ? 10 : 1;
+            state.text_x = Math.max(0, Math.min(100, Number(state.text_x) + x * step));
+            state.text_y = Math.max(0, Math.min(100, Number(state.text_y) + y * step));
+            update();
+        });
+        root.querySelector('[data-reset-position]').addEventListener('click', () => {
+            state.text_position = 'auto'; state.text_x = 50; state.text_y = 50; update();
+        });
         function resetImage() {state.image_x=50;state.image_y=50;state.image_zoom=100;for(const k of ['image_x','image_y','image_zoom'])root.querySelector('[data-control="'+k+'"]').value=state[k];}
         root.querySelector('[data-reset-image]').addEventListener('click',()=>{resetImage();update();});
         root.addEventListener('input' , e => { const key = e.target.dataset.control; if (key) { state[key] = e.target.value; update(); } });
@@ -291,7 +375,7 @@
         });
         document.querySelectorAll('video.nwsp-motion').forEach(mountMotion);
     }
-    window.NwStyledPosts = { scan, fitCard, contrast };
+    window.NwStyledPosts = { scan, fitCard, positionCard, contrast };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan); else scan();
     let queued = false;
     new MutationObserver(records => {
