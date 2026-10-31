@@ -2,9 +2,10 @@ name: Text positioning candidate
 on: [push, pull_request]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - run: php tests/text-position.php
       - run: python3 -m pip install numpy Pillow
       - run: sh scripts/check.sh
