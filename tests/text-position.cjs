@@ -32,7 +32,14 @@ const {chromium}=require(require.resolve('playwright',{paths:[process.env.CODEX_
  await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:b.x+b.width/2+30,y:b.y+b.height/2-40}]});
  await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});assert.equal(await card.getAttribute('data-text-position'),'custom');await contained();
  await page.locator('.nwsp-readability summary').click();await page.locator('[data-control=text_backdrop]').selectOption('box');
- await page.locator('[data-control=font_name]').selectOption('amiri');await page.locator('[data-control=text_direction]').selectOption('rtl');
+ // Delay an unused font until positioning has already used fallback metrics.
+ let fontRoute, fontRequested;const requested=new Promise(resolve=>fontRequested=resolve);
+ await page.route('**/Amiri-Regular.ttf',route=>{fontRoute=route;fontRequested();});
+ await text.focus();for(let i=0;i<10;i++)await page.keyboard.press('Shift+ArrowRight');
+ await page.locator('[data-control=font_name]').selectOption('amiri');await requested;
+ await fontRoute.fulfill({path:path.resolve('modules/newton/my_una_styled_posts/template/fonts/Amiri-Regular.ttf'),contentType:'font/ttf'});
+ await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(100);await contained();
+ await page.locator('[data-control=text_direction]').selectOption('rtl');
  for(const width of [360,1280]){await page.setViewportSize({width,height:1000});await page.locator('[name=text]').fill('اللَّهُمَّ سلام 123 '.repeat(25));await page.waitForTimeout(100);await contained();}
  // New text, font loading, backdrop padding and long overflow keep bounds valid.
  await page.locator('[data-control=backdrop_padding]').evaluate(e=>{e.value='32';e.dispatchEvent(new Event('input',{bubbles:true}));});await contained();

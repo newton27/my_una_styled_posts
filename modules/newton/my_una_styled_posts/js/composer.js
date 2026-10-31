@@ -375,6 +375,10 @@
         });
         document.querySelectorAll('video.nwsp-motion').forEach(mountMotion);
     }
+    // A newly selected bundled/custom font can finish after the initial fonts.ready.
+    if (document.fonts) document.fonts.addEventListener('loadingdone', () => {
+        document.querySelectorAll('.nwsp-card').forEach(card => fitCard(card));
+    });
     window.NwStyledPosts = { scan, fitCard, positionCard, contrast };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan); else scan();
     let queued = false;
