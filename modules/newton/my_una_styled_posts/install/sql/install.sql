@@ -60,7 +60,7 @@ SET @nwStyledPage = LAST_INSERT_ID();
 SET @nwStyledHome = (SELECT `id` FROM `sys_std_pages` WHERE `name` = 'home' LIMIT 1);
 INSERT INTO `sys_std_widgets` (`page_id`,`module`,`type`,`url`,`click`,`icon`,`caption`,`cnt_notices`,`cnt_actions`) VALUES (@nwStyledPage,'nw_styled_posts','content','{url_studio}module.php?name=nw_styled_posts','','nw_styled_posts@modules/newton/my_una_styled_posts/|std-icon.svg','_nw_styled_posts','','');
 SET @nwStyledWidget = LAST_INSERT_ID();
-INSERT INTO `sys_std_pages_widgets` (`page_id`,`widget_id`,`order`) VALUES (@nwStyledHome,@nwStyledWidget,'99');
+INSERT INTO `sys_std_pages_widgets` (`page_id`,`widget_id`,`order`) SELECT @nwStyledHome,@nwStyledWidget,COALESCE(MAX(`order`),0)+1 FROM `sys_std_pages_widgets` WHERE `page_id`=@nwStyledHome;
 
 -- Motion backgrounds (0.2.0).
 CREATE TABLE IF NOT EXISTS `nw_styled_posts_motion_files` ( `id` int(11) NOT NULL AUTO_INCREMENT, `profile_id` int(10) unsigned NOT NULL, `remote_id` varchar(128) NOT NULL, `path` varchar(255) NOT NULL, `file_name` varchar(255) NOT NULL, `mime_type` varchar(128) NOT NULL, `ext` varchar(32) NOT NULL, `size` bigint(20) NOT NULL, `added` int(11) NOT NULL, `modified` int(11) NOT NULL, `private` int(11) NOT NULL, `dimensions` varchar(12) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `remote_id` (`remote_id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
